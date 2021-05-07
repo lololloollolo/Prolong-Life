@@ -1,0 +1,76 @@
+<ion-view sb-page-background
+          class="mcommerce-view mcommerce-sales-history-details">
+    <ion-nav-title>Write Review</ion-nav-title>
+    <ion-content>
+        <div class="list"> 
+            <!--<jk-rating-stars max-rating="5" rating="review.rating" on-rating="updateRating(rating)"></jk-rating-stars>-->
+            <form name="form" ng-submit="post()">
+
+                <label class="item item-input item-select item-custom">
+                    <div class="input-label">
+                        Product
+                    </div>
+                    <select class="not-related" id="review_product_id" ng-change="loadifExist()" ng-model="review.product_id" >
+                        <option ng-repeat="line in order.lines" value="{{line.product_id}}">{{line.title}}</option>
+                    </select>
+                </label>
+
+                <div class="item item-input item-custom"><jk-rating-stars max-rating="5" rating="review.rating" on-rating="updateRating(rating)"></jk-rating-stars></div>
+                <label class="item item-input item-custom">
+                    <div class="input-label">
+                        Write Review
+                    </div>
+                    <textarea rows="3" class="text-left" ng-model="review.review"></textarea>
+                </label>
+
+                <div class="list">
+                    <button type="button" class="button button-block button-custom" ng-click="post()">{{ "Save" | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>
+
+<style type="text/css">
+    label.no-bottom-border.item.item-checkbox {
+        background-color: transparent;
+        padding: 15px 30px 15px 20px;
+    }
+    .my-custom-stars .button .material-icons {
+        font-size: 50px; 
+    }
+
+    .my-custom-stars .star-button.star-on .material-icons {
+        color: #003399; 
+    }
+
+    .my-custom-stars .star-button.star-off .material-icons {
+        color: #99ccff; 
+    }
+
+    /* fallback */
+    @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/materialicons/v81/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    }
+
+    .material-icons {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+    }
+    .jk-rating-stars-container .button{display: none}
+</style>

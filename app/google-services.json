@@ -1,0 +1,42 @@
+{
+    "project_info": {
+        "project_number": "770122775043",
+        "firebase_url": "https://platform-wide-app-c309e.firebaseio.com",
+        "project_id": "platform-wide-app-c309e",
+        "storage_bucket": "platform-wide-app-c309e.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:770122775043:android:8cf37045d693f389",
+                "android_client_info": {
+                    "package_name": "com.appsfera.app.android609356c6ea0af"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "770122775043-30efbstm17tn48urv5neqqbkmu4m2r3r.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyBjxdW9oAEtNKnA295OMb08VyauF8GxVG4"
+                }
+            ],
+            "services": {
+                "analytics_service": {
+                    "status": 1
+                },
+                "appinvite_service": {
+                    "status": 1,
+                    "other_platform_oauth_client": []
+                },
+                "ads_service": {
+                    "status": 2
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

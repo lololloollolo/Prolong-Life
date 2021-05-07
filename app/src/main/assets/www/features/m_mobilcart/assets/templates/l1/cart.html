@@ -1,0 +1,139 @@
+<ion-view sb-page-background cache-view="false" >
+  <ion-nav-title>{{ page_title }}</ion-nav-title>
+  <ion-nav-buttons side="secondary">
+    <button ng-click="right_button.action()" class="button button-clear header-item" ng-if="right_button">
+      <span class="back-text"><span class="default-title">{{ right_button.label }}</span></span>
+      <i class="icon" ng-class="right_button.icon"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-footer">
+
+    <div class="card cart-line" ng-if="cart.lines.length" ng-repeat="line in cart.lines">
+      <div class="item item-divider item-divider-custom cart-line-title">
+        <p><strong><i class="icon ion-clipboard"></i> {{ line.name }} - {{cart.price_with_vat === '0' ? line.formattedBasePrice : line.formattedBasePriceInclTax}}</strong></p>
+      </div>
+      <div class="item item-thumbnail-left item-icon-right item-custom  cart-line-data">
+		<img ng-if="line.product.picture.url" ng-src="{{ line.product.picture.url }}" class="cart-line-data-img"/>
+        <p ng-if="cart.show_model=='1' && line.model!=''" class="cart-line-data-model">{{ "Model" | translate }}: {{ line.model }}</p>
+        <p ng-if="cart.show_sku=='1' && line.sku!=''" class="cart-line-data-sku">{{ "SKU" | translate }}: {{ line.sku }}</p>
+        <p ng-show="line.format[0].title && line.format[0].title != ''"  class="cart-line-data-format">{{ "Format:" | translate }} {{ line.format[0].title }}</p>
+        <!--<p ng-repeat="option in line.options ">
+          {{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}
+        </p>-->
+		<!-- standart options-->
+		<div ng-repeat="option in line.options " class="cart-line-data-option">
+			<p ng-if="option.multiselect==0" class="cart-line-data-option-groupname"><b>{{option.group_name}}</b></p>
+			<p class="p-left-pad cart-line-data-option-value" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+			<p class="p-left-pad cart-line-data-option-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+			<p class="p-left-pad v" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+			<p class="p-left-pad cart-line-data-option-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+		</div>
+		<div ng-if="line.multiselect_options" ng-repeat="option1 in line.multiselect_options "  class="cart-line-data-option">
+			<p class="cart-line-data-option-groupname"><b>{{option1[0].group_name}}</b></p>
+			<p class="p-left-pad cart-line-data-option-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+			<p class="p-left-pad cart-line-data-option-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+			<p class="p-left-pad cart-line-data-option-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+			<p class="p-left-pad cart-line-data-option-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+		</div>
+
+        <p ng-repeat="choice in line.choices" class="cart-line-data-choices">
+          {{ choice.title }}:
+          <span ng-repeat="elem in choice.options"><br> &nbsp;&nbsp; {{elem}}</span>
+        </p>
+        <p class="text-right cart-line-data-total"><strong>Итого:</strong> {{cart.price_with_vat === '0' ? line.formattedPrice : line.formattedTotalInclTax}}</p>
+        <i class="icon ion-trash-a cart-line-data-removeline" ng-click="removeLine(line)"></i>
+      </div>
+	  <div class="item item-custom cart-line-data-comment" ng-if="line.note!=''">
+	  <p><i>{{ "Comment" | translate }}: {{ line.note }}</i></p>
+	  </div>
+      <sb-input-number value="line.qty" min="1" step="1" change-qty="changeQuantity(qty,params)" params="{line:line}"></sb-input-number>
+    </div>
+    <div class="card cart-total-card" ng-if="cart.lines.length">
+      <div class="item item-divider item-divider-custom cart-total-card-divider">
+        <p><strong><i class="icon ion-calculator"></i> {{ "Total" | translate }}</strong></p>
+      </div>
+      <div class="item item-custom cart-total-card-deliveryfees" ng-if="cart.deliveryCost > 0">
+        {{ "Delivery fees" | translate }}
+        <span class="item-note" ng-if="!is_loading">{{ cart.formattedDeliveryTTC }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+      <div class="item item-custom cart-total-card-subtotal">
+        <strong>{{ "Subtotal" | translate }}</strong>
+        <span class="item-note" ng-if="!is_loading"><strong>{{cart.price_with_vat === '0' ? cart.formattedSubtotalExclTax : cart.formattedSubtotal}}</strong></span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+      <div class="item item-custom cart-total-card-discountcode" ng-if="cart.discount_enabled">
+        {{ "Discount code" | translate }}
+        <span class="item-note">
+          <input type="text" name="discount_code" ng-model="cart.discount_code" class="discount" ng-disabled="points_data.use_points" ng-change="updateTipAndDiscount()">
+        </span>
+      </div>
+      <div class="item item-custom cart-total-card-discount" ng-if="cart.discount_enabled && cart.discount_code != '' && cart.discount">
+        {{ "Discount" | translate }} ({{ cart.discount_message }})
+        <span class="item-note" ng-if="!is_loading">- {{ cart.discount }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+      <ion-checkbox class="checkbox-custom" ng-model="points_data.use_points" ng-change="useFidelityChange()" ng-if="cart.customer_fidelity_points && cart.fidelity_rate">{{ "Use my points?" | translate }}</ion-checkbox>
+
+      <div ng-show="points_data.use_points" class="cart-total-card-usepoints">
+        <div class="item item-custom cart-total-card-usepoints-available">
+          {{ "Points available:" | translate }} {{ cart.customer_fidelity_points }}, {{ "1 points =" | translate }} {{ cart.fidelity_rate }} {{ cart.currency_code }}
+        </div>
+        <div class="item item-custom cart-total-card-usepoints-use">
+          {{ "Use:" | translate }}
+          <span class="item-note">
+            <input type="number" name="points" ng-model="points_data.nb_points_used" class="cart-tip" min="1" max="{{cart.customer_fidelity_points}}" ng-change="updateEstimatedDiscount()">
+          </span>
+        </div>
+        <div class="item item-custom cart-total-card-estimatediscount">
+          {{ "Estimated discount:" | translate }} <span class="item-note" ng-bind-html="cart.estimated_fidelity_discount"></span>
+        </div>
+        <div class="item-divider item-divider-custom"></div>
+      </div>
+      <div class="item item-custom cart-total-card-subtotalwithdsiscount" ng-if="cart.discount_enabled && cart.discount_code != '' && cart.discount">
+        <strong>{{ "Subtotal" | translate }} {{ "Incl." | translate | lowercase }} {{ "Discount" | translate | lowercase }}</strong>
+        <span class="item-note" ng-if="!is_loading">{{ cart.formattedSubtotalWithDiscount }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+      <div class="item item-custom cart-total-card-subtotalexcltax" ng-if="cart.deliveryCost > 0">
+        {{ "Subtotal Excl. Tax" | translate }}
+        <span class="item-note" ng-if="!is_loading">{{ cart.formattedDeductedTotalHT }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+      <!--div class="item item-custom cart-total-card-tax">
+        {{ "Tax" | translate }}
+        <span class="item-note" ng-if="!is_loading">{{ cart.formattedDeductedTva }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div-->
+      <div class="item item-custom cart-total-card-addgratuity" ng-if="cart.add_tip">
+        {{ "Add gratuity (Optional)" | translate }}
+        <span class="item-note">
+          <input type="number" name="tip" ng-model="cart.tip" class="cart-tip" ng-change="updateTipAndDiscount()">
+        </span>
+      </div>
+      <div class="item item-custom cart-total-card-fulltotal">
+        <strong>{{ "Total" | translate }}</strong>
+        <span class="item-note" ng-if="!is_loading">{{ cart.formattedTotal }}</span>
+        <span class="item-note" ng-if="is_loading"><ion-spinner class="spinner-custom"></ion-spinner></span>
+      </div>
+    </div>
+    <div class="card cart-card-empty" ng-if="!cart.lines.length">
+      <div class="item item-custom">
+        <p>{{ "My cart is empty" | translate }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-icon-left item-custom cart-continue-button" ng-click="goToCategories()">
+                <i class="icon ion-ios-arrow-back"></i> {{ "Continue shopping" | translate }}
+            </div>
+        </div>
+        <style type="text/css">
+		p.p-left-pad {padding-left:10px;}
+        </style>
+    </ion-content>
+<mmobilcart-footer></mmobilcart-footer>
+</ion-view>
+
+
+

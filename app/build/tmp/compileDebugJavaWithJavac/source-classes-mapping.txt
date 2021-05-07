@@ -1,0 +1,429 @@
+org/apache/cordova/inappbrowser/InAppBrowser.java
+ org.apache.cordova.inappbrowser.InAppBrowser
+ org.apache.cordova.inappbrowser.InAppBrowser$1
+ org.apache.cordova.inappbrowser.InAppBrowser$2
+ org.apache.cordova.inappbrowser.InAppBrowser$3
+ org.apache.cordova.inappbrowser.InAppBrowser$4
+ org.apache.cordova.inappbrowser.InAppBrowser$5
+ org.apache.cordova.inappbrowser.InAppBrowser$6
+ org.apache.cordova.inappbrowser.InAppBrowser$6$1
+ org.apache.cordova.inappbrowser.InAppBrowser$7
+ org.apache.cordova.inappbrowser.InAppBrowser$7$1
+ org.apache.cordova.inappbrowser.InAppBrowser$7$1JsObject
+ org.apache.cordova.inappbrowser.InAppBrowser$7$2
+ org.apache.cordova.inappbrowser.InAppBrowser$7$3
+ org.apache.cordova.inappbrowser.InAppBrowser$7$4
+ org.apache.cordova.inappbrowser.InAppBrowser$7$5
+ org.apache.cordova.inappbrowser.InAppBrowser$InAppBrowserClient
+com/cowbell/cordova/geofence/CommandExecutionHandler.java
+ com.cowbell.cordova.geofence.CommandExecutionHandler
+com/cowbell/cordova/geofence/RemoveGeofenceCommand.java
+ com.cowbell.cordova.geofence.RemoveGeofenceCommand
+ com.cowbell.cordova.geofence.RemoveGeofenceCommand$1
+com/xtraball/musiccontrols/KillBinder.java
+ com.xtraball.musiccontrols.KillBinder
+uk/co/whiteoctober/cordova/AppVersion.java
+ uk.co.whiteoctober.cordova.AppVersion
+com/cowbell/cordova/geofence/GeofencePlugin.java
+ com.cowbell.cordova.geofence.GeofencePlugin
+ com.cowbell.cordova.geofence.GeofencePlugin$1
+ com.cowbell.cordova.geofence.GeofencePlugin$Action
+org/apache/cordova/file/ContentFilesystem.java
+ org.apache.cordova.file.ContentFilesystem
+admob/plugin/ads/AdBase.java
+ admob.plugin.ads.AdBase
+de/appplant/cordova/plugin/notification/trigger/IntervalTrigger.java
+ de.appplant.cordova.plugin.notification.trigger.IntervalTrigger
+ de.appplant.cordova.plugin.notification.trigger.IntervalTrigger$1
+de/appplant/cordova/plugin/notification/receiver/AbstractTriggerReceiver.java
+ de.appplant.cordova.plugin.notification.receiver.AbstractTriggerReceiver
+de/appplant/cordova/plugin/localnotification/LocalNotification.java
+ de.appplant.cordova.plugin.localnotification.LocalNotification
+ de.appplant.cordova.plugin.localnotification.LocalNotification$1
+ de.appplant.cordova.plugin.localnotification.LocalNotification$2
+ de.appplant.cordova.plugin.localnotification.LocalNotification$3
+com/cowbell/cordova/geofence/GeoNotificationManager.java
+ com.cowbell.cordova.geofence.GeoNotificationManager
+com/ionicframework/cordova/webview/IonicWebView.java
+ com.ionicframework.cordova.webview.IonicWebView
+ com.ionicframework.cordova.webview.IonicWebView$1
+nl/xservices/plugins/SocialSharing.java
+ nl.xservices.plugins.SocialSharing
+ nl.xservices.plugins.SocialSharing$1
+ nl.xservices.plugins.SocialSharing$1$1
+ nl.xservices.plugins.SocialSharing$2
+ nl.xservices.plugins.SocialSharing$2$1
+ nl.xservices.plugins.SocialSharing$2$2
+ nl.xservices.plugins.SocialSharing$2$2$1
+ nl.xservices.plugins.SocialSharing$2$3
+ nl.xservices.plugins.SocialSharing$3
+ nl.xservices.plugins.SocialSharing$3$1
+ nl.xservices.plugins.SocialSharing$4
+ nl.xservices.plugins.SocialSharing$SocialSharingRunnable
+org/apache/cordova/media/AudioHandler.java
+ org.apache.cordova.media.AudioHandler
+ org.apache.cordova.media.AudioHandler$1
+ org.apache.cordova.media.AudioHandler$10
+ org.apache.cordova.media.AudioHandler$11
+ org.apache.cordova.media.AudioHandler$12
+ org.apache.cordova.media.AudioHandler$13
+ org.apache.cordova.media.AudioHandler$14
+ org.apache.cordova.media.AudioHandler$15
+ org.apache.cordova.media.AudioHandler$2
+ org.apache.cordova.media.AudioHandler$3
+ org.apache.cordova.media.AudioHandler$4
+ org.apache.cordova.media.AudioHandler$5
+ org.apache.cordova.media.AudioHandler$6
+ org.apache.cordova.media.AudioHandler$7
+ org.apache.cordova.media.AudioHandler$8
+ org.apache.cordova.media.AudioHandler$9
+org/apache/cordova/whitelist/WhitelistPlugin.java
+ org.apache.cordova.whitelist.WhitelistPlugin
+ org.apache.cordova.whitelist.WhitelistPlugin$1
+ org.apache.cordova.whitelist.WhitelistPlugin$CustomConfigXmlParser
+cc/fovea/Constants.java
+ cc.fovea.Constants
+org/apache/cordova/geolocation/Geolocation.java
+ org.apache.cordova.geolocation.Geolocation
+com/cowbell/cordova/geofence/GeoNotification.java
+ com.cowbell.cordova.geofence.GeoNotification
+org/apache/cordova/camera/FileProvider.java
+ org.apache.cordova.camera.FileProvider
+org/apache/cordova/file/TypeMismatchException.java
+ org.apache.cordova.file.TypeMismatchException
+com/adobe/phonegap/push/BackgroundHandlerActivity.java
+ com.adobe.phonegap.push.BackgroundHandlerActivity
+com/xtraball/musiccontrols/MusicControlsInfos.java
+ com.xtraball.musiccontrols.MusicControlsInfos
+org/apache/cordova/file/LocalFilesystemURL.java
+ org.apache.cordova.file.LocalFilesystemURL
+org/apache/cordova/file/DirectoryManager.java
+ org.apache.cordova.file.DirectoryManager
+com/verso/cordova/clipboard/Clipboard.java
+ com.verso.cordova.clipboard.Clipboard
+de/appplant/cordova/plugin/localnotification/RestoreReceiver.java
+ de.appplant.cordova.plugin.localnotification.RestoreReceiver
+com/cowbell/cordova/geofence/ReceiveTransitionsIntentService.java
+ com.cowbell.cordova.geofence.ReceiveTransitionsIntentService
+com/appsfera/app/android609356c6ea0af/BuildConfig.java
+ com.appsfera.app.android609356c6ea0af.BuildConfig
+com/cowbell/cordova/geofence/GoogleServiceCommandExecutor.java
+ com.cowbell.cordova.geofence.GoogleServiceCommandExecutor
+com/adobe/phonegap/push/PushPlugin.java
+ com.adobe.phonegap.push.PushPlugin
+ com.adobe.phonegap.push.PushPlugin$1
+ com.adobe.phonegap.push.PushPlugin$10
+ com.adobe.phonegap.push.PushPlugin$11
+ com.adobe.phonegap.push.PushPlugin$12
+ com.adobe.phonegap.push.PushPlugin$2
+ com.adobe.phonegap.push.PushPlugin$3
+ com.adobe.phonegap.push.PushPlugin$4
+ com.adobe.phonegap.push.PushPlugin$5
+ com.adobe.phonegap.push.PushPlugin$6
+ com.adobe.phonegap.push.PushPlugin$7
+ com.adobe.phonegap.push.PushPlugin$8
+ com.adobe.phonegap.push.PushPlugin$9
+de/appplant/cordova/plugin/notification/Manager.java
+ de.appplant.cordova.plugin.notification.Manager
+com/ionicframework/cordova/webview/AndroidProtocolHandler.java
+ com.ionicframework.cordova.webview.AndroidProtocolHandler
+com/cowbell/cordova/geofence/GeoNotificationNotifier.java
+ com.cowbell.cordova.geofence.GeoNotificationNotifier
+com/phonegap/plugins/barcodescanner/BarcodeScanner.java
+ com.phonegap.plugins.barcodescanner.BarcodeScanner
+ com.phonegap.plugins.barcodescanner.BarcodeScanner$1
+de/appplant/cordova/plugin/badge/BadgeImpl.java
+ de.appplant.cordova.plugin.badge.BadgeImpl
+com/xtraball/musiccontrols/MusicControlsBroadcastReceiver.java
+ com.xtraball.musiccontrols.MusicControlsBroadcastReceiver
+org/apache/cordova/splashscreen/SplashScreen.java
+ org.apache.cordova.splashscreen.SplashScreen
+ org.apache.cordova.splashscreen.SplashScreen$1
+ org.apache.cordova.splashscreen.SplashScreen$2
+ org.apache.cordova.splashscreen.SplashScreen$3
+ org.apache.cordova.splashscreen.SplashScreen$4
+ org.apache.cordova.splashscreen.SplashScreen$4$1
+ org.apache.cordova.splashscreen.SplashScreen$5
+ org.apache.cordova.splashscreen.SplashScreen$5$1
+ org.apache.cordova.splashscreen.SplashScreen$6
+ org.apache.cordova.splashscreen.SplashScreen$6$1
+ org.apache.cordova.splashscreen.SplashScreen$7
+admob/plugin/ads/RewardedVideoAd.java
+ admob.plugin.ads.RewardedVideoAd
+ admob.plugin.ads.RewardedVideoAd$1
+ admob.plugin.ads.RewardedVideoAd$2
+ admob.plugin.ads.RewardedVideoAd$3
+ admob.plugin.ads.RewardedVideoAd$4
+de/appplant/cordova/plugin/notification/receiver/AbstractNotificationReceiver.java
+ de.appplant.cordova.plugin.notification.receiver.AbstractNotificationReceiver
+com/adobe/phonegap/push/PushHandlerActivity.java
+ com.adobe.phonegap.push.PushHandlerActivity
+org/apache/cordova/inappbrowser/InAppChromeClient.java
+ org.apache.cordova.inappbrowser.InAppChromeClient
+ org.apache.cordova.inappbrowser.InAppChromeClient$1
+com/cowbell/cordova/geofence/LocalStorageDBHelper.java
+ com.cowbell.cordova.geofence.LocalStorageDBHelper
+com/cowbell/cordova/geofence/TransitionReceiver.java
+ com.cowbell.cordova.geofence.TransitionReceiver
+ com.cowbell.cordova.geofence.TransitionReceiver$1
+ com.cowbell.cordova.geofence.TransitionReceiver$PostLocationTask
+org/apache/cordova/statusbar/StatusBar.java
+ org.apache.cordova.statusbar.StatusBar
+ org.apache.cordova.statusbar.StatusBar$1
+ org.apache.cordova.statusbar.StatusBar$2
+ org.apache.cordova.statusbar.StatusBar$3
+ org.apache.cordova.statusbar.StatusBar$4
+ org.apache.cordova.statusbar.StatusBar$5
+ org.apache.cordova.statusbar.StatusBar$6
+ org.apache.cordova.statusbar.StatusBar$7
+ org.apache.cordova.statusbar.StatusBar$8
+ org.apache.cordova.statusbar.StatusBar$9
+de/appplant/cordova/plugin/notification/Request.java
+ de.appplant.cordova.plugin.notification.Request
+org/apache/cordova/file/FileExistsException.java
+ org.apache.cordova.file.FileExistsException
+com/google/cordova/plugin/BrowserTab.java
+ com.google.cordova.plugin.browsertab.BrowserTab
+com/ionicframework/cordova/webview/UriMatcher.java
+ com.ionicframework.cordova.webview.UriMatcher
+de/appplant/cordova/plugin/notification/util/LaunchUtils.java
+ de.appplant.cordova.plugin.notification.util.LaunchUtils
+de/appplant/cordova/plugin/localnotification/ClearReceiver.java
+ de.appplant.cordova.plugin.localnotification.ClearReceiver
+nl/xservices/plugins/ShareChooserPendingIntent.java
+ nl.xservices.plugins.ShareChooserPendingIntent
+admob/plugin/Events.java
+ admob.plugin.Events
+org/apache/cordova/camera/FileHelper.java
+ org.apache.cordova.camera.FileHelper
+com/cowbell/cordova/geofence/Logger.java
+ com.cowbell.cordova.geofence.Logger
+com/adobe/phonegap/push/PushConstants.java
+ com.adobe.phonegap.push.PushConstants
+com/android/plugins/Permissions.java
+ com.android.plugins.Permissions
+ com.android.plugins.Permissions$1
+ com.android.plugins.Permissions$2
+com/xtraball/musiccontrols/MusicControlsNotificationKiller.java
+ com.xtraball.musiccontrols.MusicControlsNotificationKiller
+de/appplant/cordova/plugin/notification/Notification.java
+ de.appplant.cordova.plugin.notification.Notification
+ de.appplant.cordova.plugin.notification.Notification$Type
+admob/plugin/ads/InterstitialAd.java
+ admob.plugin.ads.InterstitialAd
+ admob.plugin.ads.InterstitialAd$1
+ admob.plugin.ads.InterstitialAd$2
+ admob.plugin.ads.InterstitialAd$3
+de/appplant/cordova/plugin/notification/action/Action.java
+ de.appplant.cordova.plugin.notification.action.Action
+de/appplant/cordova/plugin/notification/util/AssetUtil.java
+ de.appplant.cordova.plugin.notification.util.AssetUtil
+com/webview/WebViewPlugin.java
+ com.webview.WebViewPlugin
+ com.webview.WebViewPlugin$1
+com/cowbell/cordova/geofence/LocalStorage.java
+ com.cowbell.cordova.geofence.LocalStorage
+com/xtraball/musiccontrols/MusicControls.java
+ com.xtraball.musiccontrols.MusicControls
+ com.xtraball.musiccontrols.MusicControls$1
+ com.xtraball.musiccontrols.MusicControls$2
+ com.xtraball.musiccontrols.MusicControls$3
+ com.xtraball.musiccontrols.MusicControls$4
+ com.xtraball.musiccontrols.MusicControls$5
+ com.xtraball.musiccontrols.MusicControls$6
+org/apache/cordova/device/Device.java
+ org.apache.cordova.device.Device
+org/apache/cordova/file/InvalidModificationException.java
+ org.apache.cordova.file.InvalidModificationException
+com/cowbell/cordova/geofence/GeoNotificationStore.java
+ com.cowbell.cordova.geofence.GeoNotificationStore
+com/appsfera/app/android609356c6ea0af/MainActivity.java
+ com.appsfera.app.android609356c6ea0af.MainActivity
+org/apache/cordova/camera/ExifHelper.java
+ org.apache.cordova.camera.ExifHelper
+com/cowbell/cordova/geofence/Notification.java
+ com.cowbell.cordova.geofence.Notification
+de/appplant/cordova/plugin/notification/action/ActionGroup.java
+ de.appplant.cordova.plugin.notification.action.ActionGroup
+de/appplant/cordova/plugin/notification/receiver/AbstractClickReceiver.java
+ de.appplant.cordova.plugin.notification.receiver.AbstractClickReceiver
+org/apache/cordova/file/FileUtils.java
+ org.apache.cordova.file.FileUtils
+ org.apache.cordova.file.FileUtils$1
+ org.apache.cordova.file.FileUtils$10
+ org.apache.cordova.file.FileUtils$11
+ org.apache.cordova.file.FileUtils$12
+ org.apache.cordova.file.FileUtils$13
+ org.apache.cordova.file.FileUtils$14
+ org.apache.cordova.file.FileUtils$15
+ org.apache.cordova.file.FileUtils$16
+ org.apache.cordova.file.FileUtils$17
+ org.apache.cordova.file.FileUtils$18
+ org.apache.cordova.file.FileUtils$19
+ org.apache.cordova.file.FileUtils$2
+ org.apache.cordova.file.FileUtils$20
+ org.apache.cordova.file.FileUtils$21
+ org.apache.cordova.file.FileUtils$22
+ org.apache.cordova.file.FileUtils$23
+ org.apache.cordova.file.FileUtils$24
+ org.apache.cordova.file.FileUtils$25
+ org.apache.cordova.file.FileUtils$26
+ org.apache.cordova.file.FileUtils$27
+ org.apache.cordova.file.FileUtils$28
+ org.apache.cordova.file.FileUtils$29
+ org.apache.cordova.file.FileUtils$3
+ org.apache.cordova.file.FileUtils$4
+ org.apache.cordova.file.FileUtils$5
+ org.apache.cordova.file.FileUtils$6
+ org.apache.cordova.file.FileUtils$7
+ org.apache.cordova.file.FileUtils$8
+ org.apache.cordova.file.FileUtils$9
+ org.apache.cordova.file.FileUtils$FileOp
+com/cowbell/cordova/geofence/Gson.java
+ com.cowbell.cordova.geofence.Gson
+com/xtraball/cordova/plugin/Navigator.java
+ com.xtraball.cordova.plugin.Navigator
+com/adobe/phonegap/push/PushInstanceIDListenerService.java
+ com.adobe.phonegap.push.PushInstanceIDListenerService
+ com.adobe.phonegap.push.PushInstanceIDListenerService$1
+org/apache/cordova/media/FileHelper.java
+ org.apache.cordova.media.FileHelper
+nl/xservices/plugins/Insomnia.java
+ nl.xservices.plugins.Insomnia
+ nl.xservices.plugins.Insomnia$1
+ nl.xservices.plugins.Insomnia$2
+org/apache/cordova/media/AudioPlayer.java
+ org.apache.cordova.media.AudioPlayer
+ org.apache.cordova.media.AudioPlayer$1
+ org.apache.cordova.media.AudioPlayer$INFORMATION
+ org.apache.cordova.media.AudioPlayer$MODE
+ org.apache.cordova.media.AudioPlayer$STATE
+com/cowbell/cordova/geofence/BootReceiver.java
+ com.cowbell.cordova.geofence.BootReceiver
+de/appplant/cordova/plugin/notification/trigger/DateTrigger.java
+ de.appplant.cordova.plugin.notification.trigger.DateTrigger
+ de.appplant.cordova.plugin.notification.trigger.DateTrigger$Unit
+com/ionicframework/cordova/webview/IonicWebViewEngine.java
+ com.ionicframework.cordova.webview.IonicWebViewEngine
+ com.ionicframework.cordova.webview.IonicWebViewEngine$1
+ com.ionicframework.cordova.webview.IonicWebViewEngine$ServerClient
+com/cowbell/cordova/geofence/IGoogleServiceCommandListener.java
+ com.cowbell.cordova.geofence.IGoogleServiceCommandListener
+com/adobe/phonegap/push/FCMService.java
+ com.adobe.phonegap.push.FCMService
+de/appplant/cordova/plugin/notification/Builder.java
+ de.appplant.cordova.plugin.notification.Builder
+org/apache/cordova/file/Filesystem.java
+ org.apache.cordova.file.Filesystem
+ org.apache.cordova.file.Filesystem$LimitedInputStream
+ org.apache.cordova.file.Filesystem$ReadFileCallback
+admob/plugin/Actions.java
+ admob.plugin.Actions
+de/appplant/cordova/plugin/notification/trigger/MatchTrigger.java
+ de.appplant.cordova.plugin.notification.trigger.MatchTrigger
+ de.appplant.cordova.plugin.notification.trigger.MatchTrigger$1
+com/adobe/phonegap/push/BackgroundActionButtonHandler.java
+ com.adobe.phonegap.push.BackgroundActionButtonHandler
+de/appplant/cordova/plugin/badge/Badge.java
+ de.appplant.cordova.plugin.badge.Badge
+ de.appplant.cordova.plugin.badge.Badge$1
+ de.appplant.cordova.plugin.badge.Badge$2
+ de.appplant.cordova.plugin.badge.Badge$3
+ de.appplant.cordova.plugin.badge.Badge$4
+ de.appplant.cordova.plugin.badge.Badge$5
+ de.appplant.cordova.plugin.badge.Badge$6
+org/apache/cordova/file/LocalFilesystem.java
+ org.apache.cordova.file.LocalFilesystem
+com/ionicframework/cordova/webview/WebViewLocalServer.java
+ com.ionicframework.cordova.webview.WebViewLocalServer
+ com.ionicframework.cordova.webview.WebViewLocalServer$1
+ com.ionicframework.cordova.webview.WebViewLocalServer$2
+ com.ionicframework.cordova.webview.WebViewLocalServer$AssetHostingDetails
+ com.ionicframework.cordova.webview.WebViewLocalServer$LazyInputStream
+ com.ionicframework.cordova.webview.WebViewLocalServer$LollipopLazyInputStream
+ com.ionicframework.cordova.webview.WebViewLocalServer$PathHandler
+io/ionic/keyboard/CDVIonicKeyboard.java
+ io.ionic.keyboard.CDVIonicKeyboard
+ io.ionic.keyboard.CDVIonicKeyboard$1
+ io.ionic.keyboard.CDVIonicKeyboard$2
+ io.ionic.keyboard.CDVIonicKeyboard$3
+ io.ionic.keyboard.CDVIonicKeyboard$3$1
+com/xtraball/musiccontrols/MediaSessionCallback.java
+ com.xtraball.musiccontrols.MediaSessionCallback
+admob/plugin/AdSizeType.java
+ admob.plugin.AdSizeType
+de/appplant/cordova/plugin/notification/receiver/AbstractClearReceiver.java
+ de.appplant.cordova.plugin.notification.receiver.AbstractClearReceiver
+org/apache/cordova/file/NoModificationAllowedException.java
+ org.apache.cordova.file.NoModificationAllowedException
+org/apache/cordova/statusbar/StatusBarViewHelper.java
+ org.apache.cordova.statusbar.StatusBarViewHelper
+ org.apache.cordova.statusbar.StatusBarViewHelper$1
+org/apache/cordova/file/PendingRequests.java
+ org.apache.cordova.file.PendingRequests
+ org.apache.cordova.file.PendingRequests$1
+ org.apache.cordova.file.PendingRequests$Request
+cc/fovea/PurchasePlugin.java
+ cc.fovea.PurchasePlugin
+ cc.fovea.PurchasePlugin$1
+ cc.fovea.PurchasePlugin$2
+ cc.fovea.PurchasePlugin$3
+admob/plugin/AdMob.java
+ admob.plugin.AdMob
+com/cowbell/cordova/geofence/AssetUtil.java
+ com.cowbell.cordova.geofence.AssetUtil
+com/webview/WebViewActivity.java
+ com.webview.WebViewActivity
+ com.webview.WebViewActivity$1
+ com.webview.WebViewActivity$1$1
+ com.webview.WebViewActivity$1$2
+ com.webview.WebViewActivity$2
+admob/plugin/ads/BannerAd.java
+ admob.plugin.ads.BannerAd
+ admob.plugin.ads.BannerAd$1
+ admob.plugin.ads.BannerAd$2
+nl/xservices/plugins/FileProvider.java
+ nl.xservices.plugins.FileProvider
+org/apache/cordova/file/EncodingException.java
+ org.apache.cordova.file.EncodingException
+de/appplant/cordova/plugin/notification/receiver/AbstractRestoreReceiver.java
+ de.appplant.cordova.plugin.notification.receiver.AbstractRestoreReceiver
+org/apache/cordova/file/AssetFilesystem.java
+ org.apache.cordova.file.AssetFilesystem
+de/appplant/cordova/plugin/localnotification/TriggerReceiver.java
+ de.appplant.cordova.plugin.localnotification.TriggerReceiver
+org/apache/cordova/camera/CameraLauncher.java
+ org.apache.cordova.camera.CameraLauncher
+ org.apache.cordova.camera.CameraLauncher$1
+de/appplant/cordova/plugin/notification/Options.java
+ de.appplant.cordova.plugin.notification.Options
+com/cowbell/cordova/geofence/AbstractGoogleServiceCommand.java
+ com.cowbell.cordova.geofence.AbstractGoogleServiceCommand
+com/adobe/phonegap/push/PushDismissedHandler.java
+ com.adobe.phonegap.push.PushDismissedHandler
+com/xtraball/musiccontrols/MusicControlsNotification.java
+ com.xtraball.musiccontrols.MusicControlsNotification
+admob/plugin/Action.java
+ admob.plugin.Action
+com/cowbell/cordova/geofence/AddGeofenceCommand.java
+ com.cowbell.cordova.geofence.AddGeofenceCommand
+ com.cowbell.cordova.geofence.AddGeofenceCommand$1
+de/appplant/cordova/plugin/localnotification/ClickReceiver.java
+ de.appplant.cordova.plugin.localnotification.ClickReceiver
+org/apache/cordova/inappbrowser/InAppBrowserDialog.java
+ org.apache.cordova.inappbrowser.InAppBrowserDialog
+nl/xservices/plugins/Toast.java
+ nl.xservices.plugins.Toast
+ nl.xservices.plugins.Toast$1
+ nl.xservices.plugins.Toast$1$1
+ nl.xservices.plugins.Toast$1$2
+ nl.xservices.plugins.Toast$1$3
+de/appplant/cordova/plugin/notification/util/AssetProvider.java
+ de.appplant.cordova.plugin.notification.util.AssetProvider
+admob/plugin/ads/AdListener.java
+ admob.plugin.ads.AdListener
+org/apache/cordova/camera/CordovaUri.java
+ org.apache.cordova.camera.CordovaUri
+de/appplant/cordova/plugin/notification/NotificationVolumeManager.java
+ de.appplant.cordova.plugin.notification.NotificationVolumeManager
+ de.appplant.cordova.plugin.notification.NotificationVolumeManager$1

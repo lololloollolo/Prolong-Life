@@ -1,0 +1,75 @@
+<ion-modal-view sb-page-background class="view-donation">
+
+    <ion-header-bar class="bar-custom">
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeStripeModal();">{{ "Close" | translate }}</button>
+        </div>
+        <h1 class="title">{{ "Payment" | translate }}</h1>
+    </ion-header-bar>
+
+    <ion-content id="stripe-confirm-dialog">
+        <div class="list mmobilcart-stripe" ng-show="!is_loading">
+            <div >
+                <label class="item item-custom item-text-wrap">
+                    <p>
+                        <i class="ion-ios-information-outline"></i> {{ "Please fill in your card information to process Credit card payment:" | translate }}
+                    </p>
+                </label>
+				<div id="stripe-card-element"></div>
+				<div id="card-errors" role="alert"></div>
+				<button type="button" class="button button-block button-custom activated" ng-click="make_stripe_pay()">{{ "Pay" | translate }}</button>
+				<!--
+                <form>
+                    <div class="item item-divider item-divider-custom"></div>
+                    <label class="item item-input item-custom">
+                        <input type="text" ng-model="stripe_cart.number" placeholder="{{ 'Card Number' | translate }} *">
+                    </label>
+
+                    <div class="row">
+                        <label class="item item-input item-custom">
+                            <input type="text" ng-model="stripe_cart.cvc" placeholder="{{ 'CVC' | translate }} *">
+                        </label>
+                        <label class="item item-input item-custom col-25">
+                            <input type="text" ng-model="stripe_cart.exp_month" placeholder="{{ 'MM' | translate }} *">
+                        </label>
+                        <label class="item item-input item-custom col-25">
+                            <input type="text" ng-model="stripe_cart.exp_year" placeholder="{{ 'YYYY' | translate }} *">
+                        </label>
+                    </div>
+					<button type="button" class="button button-block button-custom activated" ng-click="make_stripe_pay()">{{ "Pay" | translate }}</button>
+                </form>-->
+            </div>
+
+        </div>
+	<style>
+#stripe-card-element { padding-top:20px; padding-bottom:20px;}	
+#card-errors { padding-top:20px; padding-bottom:20px; color:red; font-weight:bold; margin:5px;}	
+.StripeElement {
+  background-color: white;
+  height: 60px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+	padding-top: 20px;
+	padding-bottom: 30px;
+	margin: 5px; 
+	margin-top: 20px;
+}
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}	
+	</style>
+    </ion-content>
+</ion-modal-view>
+

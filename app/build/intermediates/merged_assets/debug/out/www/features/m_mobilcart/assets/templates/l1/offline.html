@@ -1,0 +1,36 @@
+<ion-view sb-page-background>
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button ng-click="right_button.action()"
+                class="button button-clear header-item"
+                ng-if="right_button">
+
+            <span class="back-text">
+                <span class="default-title">{{ right_button.label }}</span>
+            </span>
+
+            <i class="icon" ng-class="right_button.icon"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content>
+
+        <div class="card offline-card">
+            <div class="item item-text-wrap item-custom"> <p class="offline-text" ng-bind-html="myHTML"></p>
+            </div>
+            <div class="item item-text-wrap item-custom">
+				<button ng-click="goHome()" class="button button-custom icon-left button-assertive offline-button-close" >
+
+					<span class="back-text">
+						<span class="default-title">{{ "Close" | translate }}</span>
+					</span>
+
+					<i class="icon" ng-class="right_button.icon"></i>
+				</button>
+            </div>			
+        </div>
+<style type="text/css">
+ion-header-bar.bar {display:none;}
+</style>
+   </ion-content>
+</ion-view>

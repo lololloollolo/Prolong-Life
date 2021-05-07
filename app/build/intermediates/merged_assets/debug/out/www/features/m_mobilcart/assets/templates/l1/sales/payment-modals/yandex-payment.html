@@ -1,0 +1,20 @@
+<ion-modal-view sb-page-background class="view-donation">
+
+    <ion-header-bar class="bar-custom">
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeYandexModal();">{{ "Close" | translate }}</button>
+        </div>
+        <h1 class="title">ОПЛАТА</h1>
+    </ion-header-bar>
+
+    <ion-content id="iyzico-confirm-dialog">
+	<div style="width:100%; height:100%; display:none;" id="ifrboxdiv">
+		<iframe name="confirmIframe" id="ifrbox" style="width:100%; height:100%;"></iframe>
+	</div>
+
+	<style>
+	div.scroll {height:100%;}
+	</style>
+
+    </ion-content>
+</ion-modal-view>

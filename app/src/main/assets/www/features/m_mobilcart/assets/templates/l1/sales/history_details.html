@@ -1,0 +1,111 @@
+<ion-view sb-page-background cache-view="false" >
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button ng-click="addOrderToCart()" class="button button-clear header-item" ng-if="order.details.can_reorder=='1'">
+            <span class="back-text"><span class="default-title">{{ "Re-order" | translate }}</span></span>
+            <i class="icon" ng-class="right_button.icon"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="has-footer">
+
+        <div class="list history-order-rows">
+            <div class="item item-divider item-divider-custom item-custom history-order-rows-orderno">
+                <h2><strong>{{ "Order N°" | translate }}: {{ order.details.number }}</strong></h2>
+            </div>
+            <div class="item item-custom history-order-rows-delivery-method">
+                {{ "Delivery Method" | translate }}: {{ order.details.delivery_method }}
+            </div>
+            <div class="item item-custom history-order-rows-payment-method">
+                {{ "Payment Method" | translate }}: {{ order.details.payment_method }}
+            </div>
+            <div class="item item-custom history-order-rows-status">
+                {{ "Status" | translate }}: {{ order.details.status_label }}
+            </div>
+            <div class="item item-custom history-order-rows-discount" ng-if="order.details.discount">
+                {{ "Discount used" | translate }}: {{ order.details.discount }}
+            </div>
+            <div class="item item-divider item-divider-custom item-custom history-order-rows-details-title">
+                <h2><strong>{{ "Order Details" | translate }}</strong></h2>
+            </div>
+			<!--
+            <div class="item item-custom item-icon-left" ng-repeat="line in order.lines">
+                <i class="icon ion-pricetag"></i>
+                <h2 ng-bind-html="line.title"></h2>
+				<p ng-if="order.details.show_model=='1' && line.model!=''">{{ "Model" | translate }}: {{ line.model }}</p>
+				<p ng-if="order.details.show_sku=='1' && line.sku!=''">{{ "SKU" | translate }}: {{ line.sku }}</p>				
+                <p ng-if="line.note!=''"><i>{{ "Comment" | translate }}: {{ line.note }}</i></p>
+				<p>{{ "Qty" | translate }}: {{ line.qty}}</p>
+                <p class="text-right"><strong>{{ line.total }}</strong></p>
+				
+            </div>-->
+			
+        <div class="history-order-rows-details-line" ng-if="order.lines.length" ng-repeat="line in order.lines" >
+            <div class="item item-divider history-order-rows-details-line-title">
+                <h2 ng-bind-html="line.title"></h2>
+            </div>
+            <div class="item item-thumbnail-left item-icon-right item-custom history-order-rows-details-line-data">
+                <img ng-if="line.picture.url != ''" ng-src="{{ line.picture.url }}" class="history-order-rows-details-line-data-img"/>
+        <p ng-if="order.show_model=='1' && line.model!=''"  class="history-order-rows-details-line-data-model">{{ "Model" | translate }}: {{ line.model }}</p>
+        <p ng-if="order.show_sku=='1' && line.sku!=''" class="history-order-rows-details-line-data-sku">{{ "SKU" | translate }}: {{ line.sku }}</p>				
+                <p ng-show="line.format[0].title && line.format[0].title != ''" class="history-order-rows-details-line-data-format">{{ "Format:" | translate }} {{ line.format[0].title }}</p>
+				<div ng-repeat="option in line.options " class="history-order-rows-details-line-data-options-line">
+					<p ng-if="option.multiselect==0" class="history-order-rows-details-line-data-options-line-groupname"><b>{{option.group_name}}</b></p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+				</div>
+				<div ng-if="line.multiselect_options" ng-repeat="option1 in line.multiselect_options " class="history-order-rows-details-line-data-options-line">
+					<p  class="history-order-rows-details-line-data-options-line-groupname"><b>{{option1[0].group_name}}</b></p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+					<p class="p-left-pad history-order-rows-details-line-data-options-line-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>			
+				</div>				
+				<div  ng-repeat="choice in line.choices" class="history-order-rows-details-line-data-choices-line">
+					<p class="history-order-rows-details-line-data-choices-line-title"><b>{{ choice.title }}</b></p>
+					<p class="p-left-pad history-order-rows-details-line-data-choices-line-value" ng-repeat="elem in choice.options">{{elem}}</p>
+				</div>
+                <p class="text-right history-order-rows-details-line-data-total"><strong>{{ "Total:" | translate }}</strong> {{ line.total }}</p>
+            </div>
+			  <div class="item item-custom history-order-rows-details-line-data-comment" ng-if="line.note!=''">
+			  <p><i>{{ "Comment" | translate }}: {{ line.note }}</i></p>
+			  </div>			
+             <div class="item item-custom history-order-rows-details-line-data-qty">
+                {{ "Qty" | translate }} : {{ line.qty }}
+            </div>			
+        </div>
+
+
+		
+            <div class="item item-divider item-divider-custom item-custom history-order-rows-total-title">
+                <h2><strong>{{ "Order Total" | translate }}</strong></h2>
+            </div>
+            <div class="item item-custom history-order-rows-subtotal">
+                {{ "Subtotal" | translate }}: <span class="pull-right">{{ order.details.subtotal }}</span>
+            </div>
+            <div class="item item-custom history-order-rows-totaltax">
+                {{ "Total tax" | translate }}: <span class="pull-right">{{ order.details.total_tax }}</span>
+            </div>
+            <div class="item item-custom history-order-rows-discount-amount" ng-if="order.details.discount">
+                {{ "Discount amount" | translate }}: <span class="pull-right">{{ order.details.discount_total }}</span>
+            </div>
+            <div class="item item-custom history-order-rows-gratuity" ng-if="order.details.tip">
+                {{ "Gratuity" | translate }}: <span class="pull-right">{{ order.details.tip }}</span>
+            </div>
+            <div class="item item-custom history-order-rows-total">
+                {{ "Total" | translate }}: <span class="pull-right">{{ order.details.total }}</span>
+            </div>
+            <div class="item item-custom history-order-rows-comment" style="text-align:center;">
+                {{ "Comment" | translate }}: <br><span ng-bind-html="order.details.notes"></span>
+            </div>
+            <div class="item item-text-wrap item-icon-left item-custom history-order-rows-addagainsbutton" ng-click="addOrderToCart()" ng-if="order.details.can_reorder=='1'">
+                <i class="icon ion-ios-cart-outline"></i>
+                {{ "Add order to cart again" | translate }}
+            </div>			
+			
+        </div>
+		
+    </ion-content>
+<mmobilcart-footer></mmobilcart-footer>
+</ion-view>

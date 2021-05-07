@@ -1,0 +1,167 @@
+<ion-view sb-page-background>
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+
+<div class="tabs tabs-icon-top">
+  <a class="tab-item" ng-click="openHistory()">
+    <i class="icon ion-clipboard"></i>
+    {{ "Order history" | translate }}
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-home"></i>
+    {{ "Home" | translate }}
+  </a>
+  <a class="tab-item" ng-click="openCart()">
+    <i class="icon ion-ios-cart"><span ng-show="cart_total>0"class="badge badge-assertive">{{ cart_total }}</span></i>
+    {{ "My Cart" | translate }}
+  </a>
+</div>
+    <ion-content class="has-footer">
+
+        <div class="card">
+            <div class="item item-text-wrap text-center item-custom">
+				<h2>
+                    <strong>
+                        {{ product.name | uppercase }}
+                    </strong>
+                </h2>
+				<p class="three-lines small-line product-model-line" ng-if="show_model==1 && product.model !=''" ng-class="">{{ "Model" | translate }}: {{product.model}}</p>
+				<p class="three-lines small-line product-sku-line" ng-if="show_sku==1 && product.sku !=''" ng-class="">{{ "SKU" | translate }}: {{product.sku}}</p>
+            </div>
+            <div ng-if="product.picture.length" class="item item-custom product-image-block"><span class="sticker" ng-if="product.stickers.length>0" ng-repeat="sticker in product.stickers" style="color: #{{sticker.text_color}}; border-color:#{{sticker.border_color}}; background-color:#{{sticker.background_color}};">{{sticker.text}}</span>
+                <ion-slide-box id="homepage_slider"
+                               auto-play="false"
+                               does-continue="true"
+                               show-pager="true">
+
+                    <ion-slide ng-repeat="picture in product.picture">
+                        <img ng-src="{{picture.url}}" style="width:100%;" />
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </div>
+        <div class="card product-price-card">
+            <div class="item item-body item-custom product-price-card-firstitem">
+                <i class="ion-pricetag"></i>
+                <span ng-if="product.optionsGroups.length > 0" class="product-price-card-from-line">
+                    {{ "From:" | translate }}
+                </span>
+                <span ng-class="{'old-price':product.special_price > 0}" class="product-price-card-price-line">
+                    {{ product.formattedPriceInclTax }}
+                </span>
+                <span ng-if="product.special_price > 0" ng-class="{'new-price':product.special_price > 0}"  class="product-price-card-newprice-line">
+                    {{ product.formattedSpecialPriceInclTax }}
+                </span>
+                <div ng-show="social_sharing_active" ng-click="share()" class="mmobilcart_share">
+                    <i class="icon ion-ios-upload-outline "></i>
+                </div>
+
+            </div>
+            <label class="item item-input item-select item-custom product-price-card-prices-line" ng-if="product.formatGroups.length">
+                <div class="input-label">
+                    {{ "Prices" | translate }}
+                </div>
+                <select ng-options="format.id as format.title + ' - ' + format.formattedPriceInclTax for format in product.formatGroups" ng-model="selected_format.id"></select>
+            </label>
+        </div>
+        <div class="card product-options-card" ng-if="product.optionsGroups.length">
+            <div class="item item-divider item-divider-custom product-options-divider-line">
+                <h2><i class="ion-gear-b"></i> {{ "Options" | translate }}</h2>
+            </div>
+            <div ng-repeat="(i,optionsGroup) in product.optionsGroups" class="product-options-optiongroup-line">
+                <div class="list list-inset product-options-options-list">
+                    <label class="item item-select item-input item-custom product-options-option-list" ng-if="optionsGroup.multiselect==0">
+                        <div class="input-label option-title product-options-option-list-title">
+                            {{ optionsGroup.title }}
+                        </div>
+
+                        <select ng-if="optionsGroup.use_price==1 && optionsGroup.multiselect==0" name="optionValue" ng-model="optionsGroup.selectedOptionId" class="product-options-option-withprice-list-select">
+                            <option ng-repeat="option in optionsGroup.options" value="{{ option.optionId }}">{{ option.name }} {{ option.formattedPriceInclTax }}</option>
+                        </select>
+
+                        <select ng-if="optionsGroup.use_price==0 && optionsGroup.multiselect==0" name="optionValue" ng-model="optionsGroup.selectedOptionId" class="product-options-option-list-select">
+                            <option ng-repeat="option in optionsGroup.options" value="{{ option.optionId }}">{{ option.name }}</option>
+                        </select>
+                    </label>
+                    <label class="item item-input item-custom" ng-if="optionsGroup.multiselect==1">
+                        <div class="input-label option-title product-options-option-list-title">
+                            {{ optionsGroup.title }}
+                        </div>
+                    </label>
+					<div ng-if=" optionsGroup.description!='' " class="item item-body item-custom product-options-list-description" ng-bind-html="optionsGroup.description | trusted_html"></div>
+                    <!--<label ng-if="optionsGroup.use_qty==1" class="item item-select item-input item-custom" >
+                        <div class="input-label">
+                            {{ "Qty" | translate }}
+                        </div>
+                        <select ng-model="optionsGroup.selectedQuantity" ng-options="o as o for o in list_qty"></select>
+                    </label>
+					-->
+					<div ng-if="optionsGroup.use_qty==1 && optionsGroup.multiselect==0" class="item item-custom product-options-option-list-qty" >
+					<!--<sb-input-number ng-if="product" value="1" min="1" step="1" label="{{ 'Qty' | translate }}" change-qty="changeOptionsGroupQuantity(optionsGroup,qty)"></sb-input-number>-->
+					<sb-input-number ng-if="product" value="1" min="1" step="1" label="Qty" change-qty="changeOptionsGroupQuantity(optionsGroup,qty)"></sb-input-number>
+					</div>
+
+
+					<div ng-if="optionsGroup.multiselect==1" class="item item-body choices-group product-options-choices-group" ng-repeat="(j, option) in optionsGroup.options">
+						<label class="item item-input item-custom no-left-pad">
+							<ion-checkbox ng-model="product.optionsGroups[i].options[j].selected" class="no-bottom-border"></ion-checkbox>
+							<div class="input-label" ng-if="product.optionsGroups[i].use_price==0" >{{option.name}}</div>
+							<div class="input-label" ng-if="product.optionsGroups[i].use_price==1" >{{option.name}}  {{ option.formattedPriceInclTax }}</div>
+						</label>
+						<!--<sb-input-number ng-if="product.optionsGroups[i].use_qty==1" value="1" min="1" step="1" label="{{ 'Qty' | translate }}" change-qty="changeChoicesGroupQuantity(i,j,qty)"></sb-input-number>-->
+						<sb-input-number ng-if="product.optionsGroups[i].use_qty==1" value="1" min="1" step="1" label="Qty" change-qty="changeChoicesGroupQuantity(i,j,qty)"></sb-input-number>
+
+					</div>
+
+					<!-- now checkboxes-->
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="product.choicesGroups.length">
+            <div class="card product-choicegroup-card" ng-repeat="(i, choicesGroup) in product.choicesGroups">
+                <div class="item item-divider item-divider-custom">
+                    <h2><i class="ion-gear-b"></i> {{ choicesGroup.title }}</h2>
+                </div>
+				<div ng-if=" choicesGroup.description!='' " class="item item-body item-custom product-choicegroup-card-description" ng-bind-html="choicesGroup.description | trusted_html"></div>
+				<div class="item item-body choices-group product-choicegroup-card-option" ng-repeat="(j, option) in choicesGroup.options">
+					<label class="item item-input item-custom no-left-pad">
+						<ion-checkbox ng-model="product.choicesGroups[i].options[j].selected" class="no-bottom-border"></ion-checkbox>
+						<div class="input-label">{{option.name}}</div>
+					</label>
+
+				</div>
+            </div>
+        </div>
+
+        <div class="card product-card-qty">
+            <!--<sb-input-number ng-if="product" value="1" min="1" step="1" label="{{ 'Qty' | translate }}" change-qty="changeQuantity(qty)"></sb-input-number>-->
+			<sb-input-number ng-if="product" value="1" min="1" step="1" change-qty="changeQuantity(qty)"></sb-input-number>
+            <div class="item card product-card-qty-comment" ng-if="product.product_note!=0">
+			        <h2><i class="ion-clipboard"></i> {{ "Comment" | translate }} <span ng-if="product.product_note==2">*</span></h2>
+                    <label class="item item-input">
+                        <textarea placeholder='{{ "Comment" | translate }}' ng-required="product.product_note==2" ng-model="product.product_comment"></textarea>
+                    </label>
+			</div>
+            <div class="item item-text-wrap item-icon-left item-custom product-add-to-cart" ng-click="addProduct()">
+                <i class="icon ion-ios-cart-outline"></i>
+                {{ "Add to cart" | translate }}
+            </div>
+        </div>
+        <div class="card product-card-description">
+            <div class="item item-divider item-divider-custom product-card-description-divider">
+                <h2><i class="ion-information-circled"></i> {{ "Description" | translate }}</h2>
+            </div>
+            <div class="item item-body item-custom product-card-description-text" ng-bind-html="product.description | trusted_html" sb-a-click></div>
+        </div>
+        <style type="text/css">
+		span.sticker {border-radius:2px; padding:2px; font-size:12px; margin-bottom:5px; margin-right:5px; }
+			.old-price {text-decoration:line-through;}
+			.new-price {color:red !important;}
+		 .option-title	{font-weight:bold;}
+		 .choices-group .input-number-sb {border-top:0px;}
+
+        </style>
+    </ion-content>
+<mmobilcart-footer></mmobilcart-footer>
+</ion-view>
+

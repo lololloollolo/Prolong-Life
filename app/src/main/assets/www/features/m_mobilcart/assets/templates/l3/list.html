@@ -1,0 +1,329 @@
+<ion-view sb-page-background>
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <div sb-tooltip
+             collection="tooltip.collection"
+             current-item="tooltip.current_item"
+             button-label="tooltip.button_label"
+             show-tooltip="false"
+             on-item-clicked="showTooltip(object)"
+             ng-if="tooltip"></div>
+
+    </ion-nav-buttons>
+
+    <!-- Search filters -->
+    <div class="bar bar-subheader bigger-subheader" ng-if="settings && settings.showSearch">
+        <ion-scroll zooming="false" direction="x" id="search-scroll" ng-if="search_part_name == 'SEARCH'">
+            <div class="tabs tabs-icon-left tabs-default">
+                <a class="tab-item" ng-click="setSearchPartName('SEARCH_ADDRESS')" ng-if="settings.search_address_show"
+                   ng-class="{ 'selected-tab' : search.address != ''}">
+                    <i class="icon ion-location"></i>
+                    {{ settings.search_address_label }}
+                </a>
+                <a class="tab-item" ng-click="setSearchPartName('SEARCH_TEXT')" ng-if="settings.search_text_show"
+                   ng-class="{ 'selected-tab' : search.text != ''}">
+                    <i class="icon ion-search"></i>
+                    {{ settings.search_text_label }}
+                </a>
+                <a class="tab-item" ng-click="setSearchPartName('SEARCH_TYPE')" ng-if="settings.search_type_show"
+                   ng-class="{ 'selected-tab' : search.type != '' }">
+                    <i class="icon ion-pricetag"></i>
+                    {{ settings.search_type_label }}
+                </a>
+                <a class="tab-item" ng-click="findByAroundyou()" ng-if="settings.search_aroundyou_show"
+                   ng-class="{ 'selected-tab' : search.aroundyou }">
+                    <i class="icon ion-compass"></i>
+                    {{ settings.search_aroundyou_label }}
+                </a>
+            </div>
+        </ion-scroll>
+
+        <!-- Show when a search criterium is selected -->
+        <button type="button" class="button button-custom button-clear on-top pull-left"
+                ng-if="search_part_name != 'SEARCH'"
+                ng-click="clear()">
+            <i class="icon ion-chevron-left"></i>
+        </button>
+
+        <!--Show when search by text button is clicked-->
+        <div ng-if="search_part_name == 'SEARCH_TEXT'" ng-if="settings.search_text_show">
+            <label class="item item-input search-text-input html-custom-search" id="search-text-input">
+                <input type="text" name="search[text]" ng-model="search.text" placeholder="{{ 'Search' | translate }}"/>
+            </label>
+            <button type="submit" id="search-text-text" name="search-text-text" style="right:10px;position:absolute;"
+                    class="button button-custom button-clear on-top pull-right" ng-click="loadPlaces()">
+                <i class="icon ion-search"></i>
+            </button>
+        </div>
+
+        <!--Show when search by tag button is clicked-->
+        <div ng-if="search_part_name == 'SEARCH_TYPE'" ng-if="settings.search_type_show">
+            <ion-scroll zooming="false" direction="x" id="tag-scroll">
+                <div class="tabs tabs-icon-left tabs-default">
+                    <a class="tab-item" ng-repeat="tag in settings.tags" ng-click="findByTag(tag)" ng-class="{ 'selected-tag' : tag == search.type }">
+                        {{tag}}
+                    </a>
+                </div>
+            </ion-scroll>
+        </div>
+
+        <!--Show when search by address button is clicked-->
+        <div ng-if="search_part_name == 'SEARCH_ADDRESS'" ng-if="settings.search_address_show">
+            <label class="item item-input search-text-input html-custom-search">
+                <input type="text" name="search[address]" ng-model="search.address"
+                       placeholder="{{ 'Search' | translate }}"/>
+            </label>
+            <button type="submit" id="search-text-address" name="search-text-address" style="right:10px;position:absolute;"
+                    class="button button-custom button-clear on-top pull-right" ng-click="loadPlaces()">
+                <i class="icon ion-search"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <ion-content class="has-footer" ng-class="{ 'has-subheader has-bigger-subheader' : settings.showSearch }">
+
+        <div class="loader" ng-show="getState() == 'LOADING'">
+            <ion-spinner class="spinner-custom"></ion-spinner>
+        </div>
+
+        <ion-refresher ng-if="use_pull_refresh"
+                       class="spinner-custom"
+                       pulling-text="{{ 'Pull to refresh...' | translate }}"
+                       on-refresh="pullToRefresh()">
+        </ion-refresher>
+
+        <div class="list card-cover" ng-class="{'card' : card_design}" ng-show="!is_loading && cover && show_category_info == 1">
+ 
+            <div ng-click="showItem(cover)">
+                <div class="item item-image item-custom card-cover-picture" ng-if="cover.picture">
+                    <img ng-src="{{ cover.picture }}" />
+                </div>
+                <div ng-if='cover.description==""' class="item item-custom card-cover-nodescription">
+                    <h2>{{ cover.title }}</h2>
+                    <p>{{ cover.subtitle }}</p>
+                </div>
+				<div ng-if='cover.description!=""' class="item item-custom item-body card-cover-description"  ng-bind-html="cover.description | trusted_html">
+					{{ cover.description }}
+				</div>
+            </div>
+
+        </div>
+
+		<!-- search box -->
+		<div class="list search-box" ng-class="{'card' : card_design}" ng-show="show_search && (collection.length > 0 || products_list_chunks.length > 0)">
+                <label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" id="search" name="search" ng-model="filter_search" placeholder="{{ 'Search' | translate }}"/>
+                </label>		
+		</div>
+
+		<!-- category row style-->
+        <div class="list categories-list-rows" ng-class="{'card' : card_design}" ng-show="categories_list_type == 0 &&  collection_category.length > 0">
+			
+            <div class="item item-custom category-row categories-list-rows-row"
+                 ng-click="showItem(item)"
+                 ng-if="((!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-repeat="item in collection_category"
+                 ng-class="{'item-thumbnail-left': ((item.thumbnail.length || item.picture) && category_row_type==0), 'item-thumbnail-right': ((item.thumbnail.length || item.picture) && category_row_type==1),  'item-center': (!item.subtitle && !item.message)}"
+                 ng-class-odd="{'item-thumbnail-left': ((item.thumbnail.length || item.picture) && category_row_type==2)}"
+                 ng-class-even="{'item-thumbnail-right': ((item.thumbnail.length || item.picture) && category_row_type==2)}"
+                 >
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="categories-list-rows-row-img" />
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="categories-list-rows-row-img"/>
+                <h2>{{ item.title ? item.title : item.author }}</h2>
+                <p class="three-lines categories-list-rows-row-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle"></p>
+                
+                <p ng-if="!item.subtitle && item.message" class="categories-list-rows-row-message">{{ item.message }}</p>
+                <p class="text-align-right categories-list-rows-row-details" ng-if="item.details">
+                    <span ng-if="item.details.date">
+                        <i class="ion-ios-calendar-outline"></i>
+                        <span ng-if="!item.details.date.mt_text">{{ item.details.date.text }}</span>
+                        <span ng-if="item.details.date.mt_text">{{ item.details.date.mt_text | from_now }}</span>
+                    </span>
+                    <span ng-if="item.details.comments">
+                        <i class="ion-ios-chatboxes-outline"></i>
+                        {{ item.details.comments.text }}
+                    </span>
+                    <span ng-if="item.details.likes">
+                        <i class="ion-ios-heart-outline"></i>
+                        {{ item.details.likes.text }}
+                    </span>
+                    <div class="clear"></div>
+                </p>
+            </div>
+        </div>
+
+		<!-- category 2 column style-->
+        <div class="row categories-list-grid" ng-class="{'card' : card_design}" ng-show="categories_list_type == 1 &&  categories_list_chunks.length > 0" ng-repeat="cat_item in categories_list_chunks">
+			<div class="item item-custom col col-50 category-col categories-list-grid-item"
+                 ng-click="showItem(item)"
+				 ng-repeat="item in cat_item" ng-if="((!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-class="{'item-thumbnail-left': (item.thumbnail.length || item.picture)}">
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="categories-list-grid-item-img"/>
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="categories-list-grid-item-img"/>
+				<h2>{{ item.title ? item.title : item.author }}</h2>
+                <p class="three-lines categories-list-grid-item-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle"></p>
+                <p ng-if="!item.subtitle && item.message" class="categories-list-grid-item-message">{{ item.message }}</p>
+			</div>
+		</div>         
+		
+        <div class="row categories-list-grid" ng-class="{'card' : card_design}" ng-show="categories_list_type == 2 &&  categories_list_chunks.length > 0" ng-repeat="cat_item in categories_list_chunks">
+			<div class="item item-custom col col-33 category-col categories-list-grid-item"
+                 ng-click="showItem(item)"
+				 ng-repeat="item in cat_item" ng-if="((!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-class="{'item-thumbnail-left': (item.thumbnail.length || item.picture)}">
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="categories-list-grid-item-img"/>
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="categories-list-grid-item-img"/>
+				<h2>{{ item.title ? item.title : item.author }}</h2>
+                <p class="three-lines  categories-list-grid-item-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle"></p>
+                <p ng-if="!item.subtitle && item.message"  class="categories-list-grid-item-message">{{ item.message }}</p>
+			</div>
+		</div>  		
+
+        <div class="row categories-list-grid" ng-class="{'card' : card_design}" ng-show="categories_list_type == 3 &&  categories_list_chunks.length > 0" ng-repeat="cat_item in categories_list_chunks">
+			<div class="item item-custom col col-25 category-col categories-list-grid-item"
+                 ng-click="showItem(item)"
+				 ng-repeat="item in cat_item" ng-if="((!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-class="{'item-thumbnail-left': (item.thumbnail.length || item.picture)}">
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="categories-list-grid-item-img"/>
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="categories-list-grid-item-img"/>
+				<h2>{{ item.title ? item.title : item.author }}</h2>
+                <p class="three-lines categories-list-grid-item-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle"></p>
+                <p ng-if="!item.subtitle && item.message" class="categories-list-grid-item-message">{{ item.message }}</p>
+			</div>
+		</div> 
+		
+		<!-- product list-->
+        <div class="list products-list-rows" ng-class="{'card' : card_design}" ng-show="getState() == 'RESULTS' || collection.length">
+
+            <div class="item item-custom products-list-rows-row"
+                 ng-click="showItem(item)"
+                 ng-if="(products_list_type == 0 && (!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-repeat="item in collection | filter:filter_search  | limitTo:products_limit_now"
+                 ng-class="{'item-thumbnail-left': (item.thumbnail.length || item.picture), 'item-center': (!item.subtitle && !item.message)}">
+
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="products-list-rows-row-img"/>
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="products-list-rows-row-img"/>
+				<span class="sticker" ng-if="item.stickers.length>0" ng-repeat="sticker in item.stickers" style="color: #{{sticker.text_color}}; border-color:#{{sticker.border_color}}; background-color:#{{sticker.background_color}};">{{sticker.text}}</span>
+                <h2>{{ item.title ? item.title : item.author }}</h2>
+				<p class="three-lines small-line products-list-rows-row-model" ng-if="show_model==1 && item.model !=''" ng-class="">{{ "Model" | translate }}: {{item.model}}</p>
+				<p class="three-lines small-line products-list-rows-row-sku" ng-if="show_sku==1 && item.sku !=''" ng-class="">{{ "SKU" | translate }}: {{item.sku}}</p>
+                <p class="three-lines products-list-rows-row-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle" ng-class="{'old-price': item.special>0}"></p>
+                <p class="three-lines products-list-rows-row-special" ng-if="item.special > 0" ng-bind-html="item.formatted_special" ng-class="{'new-price': item.special>0}"></p>
+                <p ng-if="!item.subtitle && item.message" class="products-list-rows-row-message">{{ item.message }}</p>
+                <p class="text-align-right products-list-rows-row-details" ng-if="item.details">
+                    <span ng-if="item.details.date">
+                        <i class="ion-ios-calendar-outline"></i>
+                        <span ng-if="!item.details.date.mt_text">{{ item.details.date.text }}</span>
+                        <span ng-if="item.details.date.mt_text">{{ item.details.date.mt_text | from_now }}</span>
+                    </span>
+                    <span ng-if="item.details.comments" class="products-list-rows-row-details-comment">
+                        <i class="ion-ios-chatboxes-outline"></i>
+                        {{ item.details.comments.text }}
+                    </span>
+                    <span ng-if="item.details.likes">
+                        <i class="ion-ios-heart-outline"></i>
+                        {{ item.details.likes.text }}
+                    </span>
+                    <div class="clear"></div>
+                </p>
+                  <div class="button-bar products-list-rows-button-bar" ng-if="quick_order">
+                    <a class="button button-сalm icon-left button-small ion-information products-list-rows-row-more-button" ng-click="showItem(item)">{{"More info"|translate}}</a>
+                    <a class="button button-positive button-icon button-small ion-android-cart products-list-rows-row-cart-button" ng-click="addToCart(item,$event); $event.stopPropagation();"></a>
+                  </div>
+            </div>
+        </div>		
+
+		<!-- product grid2col-->
+        <div class="row products-list-grid" ng-class="{'card' : card_design}" ng-show="products_list_type == 1 &&  products_list_chunks.length > 0" ng-repeat="prod_item in products_list_chunks | limitTo:products_limit_now">
+			<div class="item item-custom col col-50 category-col products-list-grid-item"
+                 ng-click="showItem(item)"
+				 ng-repeat="item in prod_item | filter:filter_search" ng-if="((!cover || !(cover.id)) || (cover.id != item.id))"
+                 ng-class="{'item-thumbnail-left': (item.thumbnail.length || item.picture), 'item-center': (!item.subtitle && !item.message)}">
+                <img ng-src="{{ item.thumbnail }}" ng-if="item.thumbnail.length" class="products-list-grid-item-img"/>
+                <img ng-src="{{ item.picture }}" ng-if="item.picture && !item.thumbnail.length" class="products-list-grid-item-img"/>
+                <div class="button-bar products-list-grid-button-bar" ng-if="quick_order">
+                    <a class="button button-сalm button-icon button-small ion-information-circled products-list-grid-item-more-button" ng-click="showItem(item)"></a>
+                    <a class="button button-positive button-icon button-small ion-android-cart products-list-grid-item-cart-button" ng-click="addToCart(item,$event); $event.stopPropagation();"></a>
+                  </div>                
+                
+                <h2>{{ item.title ? item.title : item.author }}</h2>
+				<p class="stickers"><span class="sticker" ng-if="item.stickers.length>0" ng-repeat="sticker in item.stickers" style="color: #{{sticker.text_color}}; border-color:#{{sticker.border_color}}; background-color:#{{sticker.background_color}};">{{sticker.text}}</span></p>
+				<p class="three-lines small-line products-list-grid-item-model" ng-if="show_model==1 && item.model !=''" ng-class="">{{ "Model" | translate }}: {{item.model}}</p>
+				<p class="three-lines small-line products-list-grid-item-sku" ng-if="show_sku==1 && item.sku !=''" ng-class="">{{ "SKU" | translate }}: {{item.sku}}</p>
+                <p class="three-lines products-list-grid-item-subtitle" ng-if="item.subtitle" ng-bind-html="item.subtitle" ng-class="{'old-price': item.special>0}"></p>
+                <p class="three-lines products-list-grid-item-special" ng-if="item.special > 0" ng-bind-html="item.formatted_special" ng-class="{'new-price': item.special>0}"></p>
+                <p ng-if="!item.subtitle && item.message" class="products-list-grid-item-message">{{ item.message }}</p>
+                <p class="text-align-right products-list-grid-item-details" ng-if="item.details">
+                    <span ng-if="item.details.date">
+                        <i class="ion-ios-calendar-outline"></i>
+                        <span ng-if="!item.details.date.mt_text">{{ item.details.date.text }}</span>
+                        <span ng-if="item.details.date.mt_text">{{ item.details.date.mt_text | from_now }}</span>
+                    </span>
+                    <span ng-if="item.details.comments">
+                        <i class="ion-ios-chatboxes-outline"></i>
+                        {{ item.details.comments.text }}
+                    </span>
+                    <span ng-if="item.details.likes" class="products-list-grid-item-details-comment">
+                        <i class="ion-ios-heart-outline"></i>
+                        {{ item.details.likes.text }}
+                    </span>
+                    <div class="clear"></div>
+                </p>
+			</div>
+		</div> 		
+		
+		
+        <div class="list list-no-items-found" ng-class="{'card': card_design}" ng-if="(getState() == 'NO_RESULTS')">
+            <div class="item text-center item-custom">
+                {{ "No items found" | translate }}
+            </div>
+        </div>
+        <div ng-show="is_more_delay" class="loader">
+            <ion-spinner color="primary" name="bubbles"></ion-spinner>
+        </div>	
+		<button class="button button-block button-custom" ng-if="products_limit_now < products_total" ng-click="loadMoreButton()">
+		 <i class="icon ion-arrow-down-b"></i>  {{ "Load more..." | translate }}  <i class="icon ion-arrow-down-b"></i>
+		</button>
+        <div ng-show="is_more_delay" class="loader">
+            <ion-spinner color="primary" name="bubbles"></ion-spinner>
+        </div>		
+        <ion-infinite-scroll ng-if="products_limit_now < products_total"
+                             on-infinite="loadMoreButton()"
+                             immediate-check="false"
+                             distance="1%"
+                             class="spinner-custom">
+        </ion-infinite-scroll>
+		
+        <style type="text/css">
+			span.sticker {border-radius:2px; padding:2px; font-size:12px; margin-bottom:5px; margin-right:5px; }
+		label.html-custom-search {
+                border-radius: 3px;
+                padding-left: 10px;
+                padding-top: 3px;
+                margin-right: 6px;
+            }
+			.category-row >img:first-child{top: 30px !important; width: 80px !important;  height: auto !important; }
+			.category-col {margin-top:2px !important;}
+			.category-col:first-child {margin-right:2px !important;}
+			.category-col h2{text-align:center; white-space: normal !important;}
+			.category-col p{text-align:center; white-space: normal !important;}
+			.category-col img1 {position:unset !important;max-height: unset !important; max-width: unset !important; height: auto !important;}
+			.category-col img {height: auto !important; max-width:none !important; max-height:none !important; width: calc(100% - 20px) !important; position:relative !important; padding-bottom:10px;}
+			.category-col .stickers {text-align:center;}
+			.category-col .stickers .sticker{display:inline-flex;}
+			.old-price {text-decoration:line-through;}
+			.new-price {color:red !important;}
+			.small-line {font-size:90% !important;}
+        </style>
+    </ion-content>
+	<mmobilcart-footer></mmobilcart-footer>
+
+
+	
+
+
+	
+	
+</ion-view>

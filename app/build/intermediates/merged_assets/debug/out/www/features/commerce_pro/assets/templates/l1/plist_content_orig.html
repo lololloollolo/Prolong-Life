@@ -1,0 +1,344 @@
+
+    <ion-header-bar class="bar-subheader list" style="min-height: 110px; padding: 0px;" ng-if="categories.length > 0">
+        <ion-item style="width: 100%; display: inline;" class="item-custom" >
+            <h2><b>
+                    <span ng-show="!labels.category_text">{{ ::'Categories'| translate:'commerce_pro' }}</span>
+                    <span ng-show="labels.category_text">{{ labels.category_text }}</span>
+                </b></h2>
+            <div class="pro-categories">
+                <div class="left" ng-class="{'active': category_all }" ng-click="filterCategoryStores('')">
+                    <div  class="category-image">
+                        <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg">
+                    </div>
+                    <div class="category-label"><span>{{ ::'All'| translate:'commerce_pro' }}</span></div>
+                </div> 
+                <div class="left" ng-repeat="category in categories" ng-class="{'active': category.is_selected }" ng-click="filterCategoryStores({{category.id}})">
+                    <div  class="category-image">
+                        <img src="{{category.picture}}" ng-if="category.picture"  />
+                        <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg" ng-if="!category.picture" >
+                    </div>
+                    <div class="category-label"><span>{{ category.title }}</span></div>
+                </div> 
+            </div>
+        </ion-item>
+    </ion-header-bar>
+    
+
+    <ion-content ng-class="{ 'has-subheader' : settings.showSearch || categories.length > 0 }">
+
+        <div class="loader"
+             ng-show="getState() == 'LOADING'">
+            <ion-spinner class="spinner-custom"></ion-spinner>
+        </div>
+
+        <ion-refresher ng-if="use_pull_refresh"
+                       class="spinner-custom"
+                       pulling-text="{{ ::'Pull to refresh...'| translate:'commerce_pro' }}"
+                       on-refresh="pullToRefresh()">
+        </ion-refresher>
+
+
+
+        <div class="list"
+             ng-class="{'card' : card_design}"
+             ng-show="getState() == 'RESULTS' || collection.length">
+
+            <!-- CommercePro only -->
+            <!--<div ng-if="is_cart_enable" class="button-bar"
+                 ng-if="use_button_header">
+                <a class="button button-custom icon-left ion-clipboard"
+                   ng-click="openHistory()">{{ ::'Order history'| translate:'commerce_pro' }}</a>
+                <a class="button button-custom icon-left ion-ios-cart"
+                   ng-click="openCart()">
+                    <span>{{ ::'My cart'| translate:'commerce_pro' }}</span>
+                    <span class="badge badge-positive badge-positive-custom">{{ cartItems}}</span>
+                </a>
+            </div>-->
+
+            <div ng-show="show_search && collection.length > 0">
+                <label class="item item-input">
+                    <input type="text"
+                           id="search"
+                           name="search"
+                           ng-model="filter_search"
+                           placeholder="{{ ::'Search'| translate:'commerce_pro' }}" />
+                </label>
+            </div>
+        </div>
+
+
+
+        <div ng-if="cover.picture || cover.title" class="list"
+             ng-class="{'card' : card_design}"
+             ng-show="!is_loading && cover">
+
+            <div ng-click="showItem(cover)" class="item item-custom" style="border: none;">
+                
+                <div class="item-avatar-square item-avatar" style="padding-left: 95px; min-height: 120px;">
+                    <img  ng-src="{{ cover.picture}}" ng-if="cover.picture" />
+                    <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg" ng-if="!cover.picture" />
+                    <div style="min-height: 80px;">
+                        <h2><b ng-bind-html="cover.title"></b></h2>
+                        <p ng-if="cover.subtitle" ng-bind-html="cover.subtitle" style="margin-top: -5px;"></p>
+                        <p ng-if="cover.description" ng-bind-html="cover.description" style="margin-top: -5px;"></p>
+                        <p ng-if="cover.email || cover.phone" style="margin-top: -5px;">
+                            <span ng-show="cover.email"><a href="mailto:{{ cover.email }}">{{ cover.email }}</a></span>
+                            <span ng-show="cover.email && cover.phone"> | </span>
+                            <span ng-show="cover.phone"><a href="tel:{{ cover.phone }}" >{{ cover.phone }}</a></span>
+                        </p>
+                        
+                        <p style="/*border-bottom: 1px solid rgba(68,68,68,.2);*/">{{cover.street}} <span ng-if="location.latitude || location.longitude">| {{cover.distance}}</span></p>
+                        <button class="button button-small button-positive button-positive-custom" ng-if="is_chat_enable" ng-click="openChatWindow()" style="padding: 0px 10px; min-height: 26px; line-height: 21px; font-size: 11px;">
+                            <i class="icon ion-sb-comment post-action-icon"></i> <b>
+                                <span ng-show="!labels.chat_text">{{ ::'Chat'| translate:'commerce_pro' }}</span>
+                                <span ng-show="labels.chat_text">{{ labels.chat_text }}</span>
+                            </b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list">
+            <ion-item style="width: 100%; border: none;" ng-if="sub_categories.length" class="item-custom" >
+                <h2><b>
+                        <span ng-show="!labels.sub_category_text">{{ ::'Sub-categories'| translate:'commerce_pro' }}</span>
+                        <span ng-show="labels.sub_category_text">{{ labels.sub_category_text }}</span>
+                    </b></h2>
+                <div class="pro-categories" style="text-align: center;">
+                    <div class="left" ng-class="{'active': sub_category_all }" ng-click="filterSubCategoryProducts('')">
+                        <div  class="category-image">
+                            <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg">
+                        </div>
+                        <div class="category-label"><span>{{ ::'All'| translate:'commerce_pro' }}</span></div>
+                    </div> 
+                    <div class="left" ng-repeat="category in sub_categories" ng-class="{'active': category.is_selected }" ng-click="filterSubCategoryProducts({{category.id}})">
+                        <div  class="category-image">
+                            <img src="{{category.picture}}" ng-if="category.picture"  />
+                            <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg" ng-if="!category.picture" >
+                        </div>
+                        <div class="category-label"><span>{{ category.title }}</span></div>
+                    </div> 
+                </div>
+            </ion-item>
+            <div class="list">
+                <div class="item item-custom">
+                    <h2><b>
+                            <span ng-show="!labels.product_text">{{ ::'Products'| translate:'commerce_pro' }}</span>
+                            <span ng-show="labels.product_text">{{ labels.product_text }}</span>
+                        </b>
+                    </h2>
+                    <div class="folder-layout folder-l2 card">
+
+                        <div class="folder-l2-row" ng-if="collection.length > 0" ng-repeat="chunks in collection| filter:filter_search">
+
+                            <div tabbar-items class="folder-l2-col item item-custom" ng-repeat="product in chunks">
+                                <div style="display: flex; height: 50%;" ng-click="showItem(product)">
+                                    <img src="{{product.picture}}" ng-if="product.picture"  />
+                                    <img src="./features/commerce_pro/assets/templates/images/shop-placeholder.jpg" ng-if="!product.picture"  />
+                                </div>
+                                <div>
+                                    <div class="folder-title">{{ product.title }}</div>
+                                    <div style="float: left; padding-top: 0px; margin-top: -9px; font-weight: normal; height: 20px; overflow-y: hidden;" ng-show="product.description" ng-bind-html="product.description" class="folder-title"></div>
+                                    <div class="folder-subtitle" ng-if="!price_hide_flag">
+                                        <div style="float: left;">{{ product.wfPrice }}</div>
+                                        <button class="button button-small button-positive button-positive-custom" ng-if="is_cart_enable" ng-click="addToCart(product);">
+                                            {{ ::'ADD'| translate:'commerce_pro' }} <div style="float: right;margin-right: -8px;margin-top: -5px;">+</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="item text-center item-custom" ng-if="!is_loading && !collection.length">
+                            {{ ::'No items found'| translate:'commerce_pro' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list"
+             ng-class="{'card': card_design}"
+             ng-if="(getState() == 'NO_RESULTS')">
+            <div class="item text-center item-custom">
+                {{ ::'No items found'| translate:'commerce_pro' }}
+            </div>
+        </div>
+
+        <ion-infinite-scroll ng-if="load_more"
+                             on-infinite="loadMore()"
+                             immediate-check="false"
+                             distance="10%"
+                             class="spinner-custom">
+        </ion-infinite-scroll>
+
+        
+        <style type="text/css">
+            /* START: New design CSS */
+             .pro-categories{
+                width: 100%;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                white-space: nowrap;
+                min-height: 65px;
+                font-size: 11px;
+            }
+            .pro-categories .category-image{
+                width: 30px; 
+                height: 30px;
+                margin: 0 auto;
+            }
+            .category-label{
+                width: 60px;
+                white-space: break-spaces;
+                line-height: 16px;
+            }
+            
+            .pro-categories .category-image img{
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+            div.pro-categories{
+                width: 100%;
+            }
+            .pro-categories .left{
+                margin: 8px 5px;
+                text-align: center;
+                width: 60px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .left.active{
+                font-weight: bold;
+            }
+            .left.active .category-image{
+                border: 2px solid;
+                border-radius: 50%;
+            }
+            .has-subheader{
+                top: 170px !important;
+            }
+            .item-avatar-square img{
+                min-height: 0px; 
+                min-width: 80px; 
+                max-height: none !important; /* overwrite main class property*/
+                height: auto !important;
+                border-radius: 5px !important;
+            }
+             /* END: New design CSS */
+            label.html-custom-search {
+                border-radius: 3px;
+                padding-left: 10px;
+                padding-top: 3px;
+                margin-right: 6px;
+            }
+
+            .item-avatar-square img{
+                min-height: 0px; 
+                min-width: 80px; 
+                max-height: none !important; /* overwrite main class property*/
+                height: auto !important;
+                border-radius: 5px !important;
+            }
+            
+            .folder-layout.folder-l2 {
+                margin: 20px 0px 25px 0px !important;
+            }
+
+            .folder-layout.folder-l2.card {
+                box-shadow: none;
+            }
+
+            .folder-layout.folder-l2 .folder-l2-row {
+                padding: 0;
+                display: flex;
+                margin-top: 10px;
+                height: 160px;
+            }
+
+            .folder-layout.folder-l2 .folder-l2-row:nth-child(1) {
+                margin-top: 0;
+            }
+
+            .folder-layout.folder-l2 .folder-l2-col {
+                padding: 0;
+                width: 50%;
+            }
+
+            .folder-layout.folder-l2 .folder-l2-row div.folder-l2-col.single {
+                flex: 0 1 calc(50% - 6px);
+            }
+
+            .folder-layout.folder-l2 .folder-l2-row div.folder-l2-col {
+                margin: 0 6px;
+                padding: 0;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: 50%;
+            }
+
+            .folder-layout.folder-l2 .folder-l2-row div.folder-l2-col img {
+                height: 100%;
+                width: auto;
+                margin: 0 auto;
+            }
+
+            .folder-layout.folder-l2.card .folder-l2-row div.folder-l2-col {
+                border: 0;
+                border-radius: 3px;
+            }
+
+            .folder-layout.folder-l2.card .folder-l2-row div.folder-l2-col:nth-child(1) {
+                margin: 0 6px 0 0;
+            }
+
+            .folder-layout.folder-l2.card .folder-l2-row div.folder-l2-col:nth-child(2) {
+                margin: 0 0 0 6px;
+            }
+
+            .folder-layout.folder-l2 .folder-title {
+                /*position: absolute;
+                bottom: 16px;*/
+                width: 100%;
+                font-size: 14px;
+                padding: 5px 0px;
+                font-weight: bold;
+            }
+
+            .folder-layout.folder-l2 .folder-subtitle {
+                /*position: absolute;*/
+                bottom: 2px;
+                width: 100%;
+                text-align: center;
+                font-size: 12px;
+                padding: 10px 0px;
+            }
+
+            .folder-layout.folder-l2 .folder-subtitle button{
+                float: right;
+                padding: 0px 10px;
+                /*top: -5px;*/
+                min-height: 18px !important;
+                line-height: 18px !important;
+                font-size: 9px !important;
+            }
+            .folder-layout.folder-l2.card .folder-l2-row div.folder-l2-col {
+                padding: 10px;
+            }
+        </style>
+    </ion-content>
+    <div style="position: absolute; bottom: 0px; width: 100%; display: inline-block;" class="bar-custom bar" ng-if="is_cart_enable" ng-if="use_button_header">
+        <div style="text-align: center; float: left; ">
+          <a class="button icon-left ion-clipboard" ng-click="openHistory()" style="border: none;">
+              {{ ::'Order history'| translate:'commerce_pro' }}</a>
+        </div>
+        <div style="text-align: center; float: right; ">
+            <a class="button icon-left ion-ios-cart" ng-click="openCart()" style="border: none;">
+                 <span>{{ ::'My cart'| translate:'commerce_pro' }}</span>
+                 <span class="badge badge-positive badge-positive-custom">{{ cartItems}}</span>
+            </a>
+        </div>
+    </div>
+    

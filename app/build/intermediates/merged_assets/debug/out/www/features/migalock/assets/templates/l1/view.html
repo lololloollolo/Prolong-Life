@@ -1,0 +1,174 @@
+<ion-view class="migalock-view">
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+    <ion-content class="migalock-view">
+            <div class="card" style="margin-top: 0px;margin: 0;background-color: white;color: white;height: 100%;">
+
+              <div id="default_layout"  ng-if="layout.layout_type == 1" >
+                  <div class="item item-text-wrap item-custom">
+                    <h2>{{ 'Access restricted to authorized members only' | translate }}</h2>
+                  </div>
+                  <div class="item item-body item-custom text-center"
+                      style="overflow: hidden;">
+                      <i class="icon ion-locked" style="font-size: 200px;"></i>
+                  </div>
+                  <div ng-show="!isLoading">
+                      <div class="item item-icon-left item-custom"
+                          ng-if="description">
+                          <i class="icon ion-ios-paper-outline"></i>
+                          <span ng-bind-html="trustedHtml"
+                                style="white-space:normal;"></span>
+                      </div>
+                      <div class="item item-icon-left item-custom"
+                          ng-click="migalock_logout()"
+                          ng-if="isLoggedIn">
+                          <i class="icon ion-power"></i>
+                          {{ 'Log-out' | translate }}
+                      </div>
+                      <div class="item item-icon-left item-custom"
+                          ng-click="migalock_login()"
+                          ng-if="!isLoggedIn">
+                          <i class="icon ion-ios-person-outline"></i>
+                          {{ 'Login or Signup' | translate }}
+                      </div>
+                  </div>
+              </div>
+              
+              <div id="layout1" ng-if="layout.layout_type == 2" class="card padlock content-container" style="background-image: url('{{base_url}}{{pic_path}}{{layout.layout1_bg}}');background-size: cover;">
+                <div class="item item-text-wrap item-custom t1_txt"  ng-bind-html="trustedHtml">
+                    
+                </div>
+                <div ng-show="!isLoading"  id="layout2_content_container">
+                    <div class="item item-icon-left item-custom basic_btn logout_btn"
+                         ng-click="migalock_logout()"
+                         ng-if="isLoggedIn"
+                         id="logout_btn">
+                        <i class="icon ion-power"></i>
+                        <b>{{ 'Log-out' | translate }}</b>
+                    </div>
+                    <div class="item item-icon-left item-custom basic_btn login_btn"
+                         ng-click="migalock_login()"
+                         ng-if="!isLoggedIn">
+                        <i class="icon ion-ios-person-outline"></i>
+                        <b>{{ 'Log-in' | translate }}</b>
+                        
+                    </div>
+                    <div class="item item-icon-left item-custom basic_btn login_btn"
+                         ng-click="migalock_signup()"
+                         ng-if="!isLoggedIn">
+                        <i class="icon ion-ios-person-outline"></i>
+                        <b>{{ 'Signup' | translate }}</b>
+                        
+                    </div>
+                </div>
+              </div>
+              <div  ng-if="layout.layout_type == 3">
+                  <ion-slide-box  auto-play="true" does-continue="true" slide-interval="3000">
+
+                      <ion-slide>
+                        <div class="slide">
+                          <img id="slide1" src="{{base_url}}{{pic_path}}{{layout.layout2_bg1}}"/>
+                        </div>
+                      </ion-slide>
+              
+                      <ion-slide>
+                        <img id="slide2" src="{{base_url}}{{pic_path}}{{layout.layout2_bg2}}"/>
+                      </ion-slide>
+              
+                      <ion-slide>
+                        <img id="slide3" src="{{base_url}}{{pic_path}}{{layout.layout2_bg3}}"/>
+                      </ion-slide>
+              
+                    </ion-slide-box>
+                    <div ng-show="!isLoading" id="layout3_content_container">
+                      <div class="item item-text-wrap item-custom t1_txt"   ng-bind-html="trustedHtml">
+                      </div>
+                      <div class="item item-icon-left item-custom basic_btn logout_btn"
+                          ng-click="migalock_logout()"
+                          ng-if="isLoggedIn">
+                          <i class="icon ion-power"></i>
+                         <b>{{ 'Log-out' | translate }}</b> 
+                      </div>
+                      <div class="item item-icon-left item-custom basic_btn login_btn"
+                          ng-click="migalock_login()"
+                          ng-if="!isLoggedIn">
+                          <i class="icon ion-ios-person-outline"></i>
+                          <b>{{ 'Log-in' | translate }}</b>
+                      </div>
+                      <div class="item item-icon-left item-custom basic_btn login_btn"
+                          ng-click="migalock_signup()"
+                          ng-if="!isLoggedIn">
+                          <i class="icon ion-ios-person-outline"></i>
+                          <b>{{ 'Signup' | translate }}</b>
+                      </div>
+                  </div>
+                </div>
+            </div>   
+            <style>
+              .scroll{
+                  height: 100%;
+              }
+              .content-container{
+                  margin: 0px !important;
+                  height: 100%;
+              }
+              .t1_txt{
+                  margin-top: 40% !important;
+                  padding: 20px !important;
+                  background-color: rgba(0, 0, 0, 0) !important;
+                  text-align: center !important;
+                  color: {{layout.txt_color}} !important;
+                  background-color: rgba(255, 255, 255, 0.3) !important;
+                  
+                  
+              }
+              .login_btn{
+                  color: {{layout.login_color}} !important;
+                  background-color: {{layout.login_bg}} !important;
+                  text-align: center !important;
+                  width: {{layout.login_size*24}}% !important;
+                  margin: auto !important;
+                  padding:{{layout.login_size*3}}px !important;
+                  margin-bottom: 20px !important;
+                  margin-top: 10px !important;
+                  border: 1px solid black !important;
+                  border-radius: 5px;
+                  /* box-shadow: 5px 10px 10px !important; */
+              }
+              .logout_btn{
+                color: {{layout.logout_color}} !important;
+                  background-color: {{layout.logout_bg}} !important;
+                  text-align: center !important;
+                  width: {{layout.logout_size*24}}% !important;
+                  margin: auto !important;
+                  padding:{{layout.logout_size*3}}px !important;
+                  margin-bottom: 20px !important;
+                  margin-top: 10px !important;
+                  border: 1px solid black !important;
+                  /* box-shadow: 5px 10px 10px !important; */
+              }
+              #slide1, #slide2, #slide3{
+                width: 100%;
+                min-height: 100% !important;
+              }
+              #layout2_content_container, #layout3_content_container{
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+          
+              }
+              #layout3_video {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%;
+                min-height: 100%;
+              }
+            </style>
+        <div class="loader" ng-show="is_loading">
+            <ion-spinner class="spinner-custom"></ion-spinner>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,66 @@
+<ion-view sb-page-background
+          class="mcommerce-view mcommerce-sales-history">
+    <ion-nav-title>{{ page_title}}</ion-nav-title>
+
+    <ion-content>
+        <div class="list">
+            <div class="item item-text-wrap item-custom"
+                 ng-repeat="review in reviews">
+                <p><i class="icon person-circle-outline"><b>{{review.customer}}</b></i></p>
+                <jk-rating-stars rating="review.rating" ng-click="onItemRating(product.id)" read-only="true" ></jk-rating-stars><span>{{rating_count}}</span>
+                <p ng-bind-html="review.review"></p>
+                <p><b>{{review.created_at}}</b></p>
+            </div>
+        </div>
+
+        <ion-infinite-scroll ng-if="can_load_older_reviews"
+                             on-infinite="loadMore()"
+                             immediate-check="false"
+                             distance="10%"
+                             class="spinner-custom">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>
+
+<style type="text/css">
+    label.no-bottom-border.item.item-checkbox {
+        background-color: transparent;
+        padding: 15px 30px 15px 20px;
+    }
+    .my-custom-stars .button .material-icons {
+        font-size: 50px; 
+    }
+
+    .my-custom-stars .star-button.star-on .material-icons {
+        color: #003399; 
+    }
+
+    .my-custom-stars .star-button.star-off .material-icons {
+        color: #99ccff; 
+    }
+
+    /* fallback */
+    @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/materialicons/v81/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    }
+
+    .material-icons {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+    }
+</style>

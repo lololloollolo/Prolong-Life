@@ -1,0 +1,136 @@
+<ion-view sb-page-background cache-view="false" >
+    <ion-nav-title>{{ page_title }}</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button ng-click="right_button.action()" class="button button-clear header-item" ng-if="right_button">
+            <span class="back-text"><span class="default-title">{{ right_button.label }}</span></span>
+            <i class="icon" ng-class="right_button.icon"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-footer">
+
+        <div class="card confirmation-card-line" ng-if="cart.lines.length" ng-repeat="line in cart.lines">
+            <div class="item item-divider item-divider-custom confirmation-card-line-name">
+                <p><strong><i class="icon ion-clipboard"></i> {{ line.name }} - {{cart.price_with_vat === '0' ? line.formattedBasePrice : line.formattedBasePriceInclTax}}</strong></p>
+            </div>
+            <div class="item item-thumbnail-left item-icon-right item-custom confirmation-card-line-details">
+                <img ng-if="line.product.picture.url" ng-src="{{ line.product.picture.url }}" class="confirmation-card-line-details-img"/>
+        <p ng-if="cart.show_model=='1' && line.model!=''" class="confirmation-card-line-details-model">{{ "Model" | translate }}: {{ line.model }}</p>
+        <p ng-if="cart.show_sku=='1' && line.sku!=''" class="confirmation-card-line-details-sku">{{ "SKU" | translate }}: {{ line.sku }}</p>
+                <p ng-show="line.format[0].title && line.format[0].title != ''" class="confirmation-card-line-details-format">{{ "Format:" | translate }} {{ line.format[0].title }}</p>
+                <!--<p ng-repeat="option in line.options">
+                    {{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}
+                </p>-->
+				<div ng-repeat="option in line.options " class="confirmation-card-line-details-options">
+					<p ng-if="option.multiselect==0" class="confirmation-card-line-details-options-groupname"><b>{{option.group_name}}</b></p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-if="option.multiselect==0 && option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-if="option.multiselect==0 && option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+				</div>
+				<div ng-if="line.multiselect_options" ng-repeat="option1 in line.multiselect_options " class="confirmation-card-line-details-options">
+					<p class="confirmation-card-line-details-options-groupname"><b>{{option1[0].group_name}}</b></p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==0">{{ option.name }}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==0">{{ option.qty }} x {{ option.name }}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-repeat="option in option1" ng-if="option.use_qty==0 && option.use_price==1">{{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+					<p class="p-left-pad confirmation-card-line-details-options-value" ng-repeat="option in option1" ng-if="option.use_qty==1 && option.use_price==1">{{ option.qty }} x {{ option.name }} : {{cart.price_with_vat === '0' ? option.formattedPrice : option.formattedPriceInclTax}}</p>
+				</div>
+				<div  ng-repeat="choice in line.choices" class="confirmation-card-line-details-choices">
+					<p class="confirmation-card-line-details-choices-title"><b>{{ choice.title }}</b></p>
+					<p class="p-left-pad confirmation-card-line-details-choices-values" ng-repeat="elem in choice.options">{{elem}}</p>
+				</div>
+                <p class="text-right confirmation-card-line-details-total"><strong>Итого:</strong> {{cart.price_with_vat === '0' ? line.formattedPrice : line.formattedTotalInclTax}}</p>
+            </div>
+			  <div class="item item-custom confirmation-card-line-comment" ng-if="line.note!=''">
+			  <p><i>{{ "Comment" | translate }}: {{ line.note }}</i></p>
+			  </div>
+            <div class="item item-custom confirmation-card-line-qty">
+                {{ "Qty" | translate }} : {{ line.qty }}
+            </div>
+        </div>
+        <div class="card confirmation-card-total" ng-if="cart.lines.length">
+            <div class="item item-divider item-divider-custom confirmation-card-total-title">
+              <p><strong><i class="icon ion-calculator"></i> {{ "Total" | translate }}</strong></p>
+            </div>
+            <div class="item item-custom confirmation-card-total-deliveryfees" ng-if="cart.deliveryCost > 0">
+              {{ "Delivery fees" | translate }}
+              <span class="item-note"> {{ cart.formattedDeliveryTTC }}</span>
+            </div>
+            <div class="item item-custom confirmation-card-total-subtotal">
+              <strong>{{ "Subtotal" | translate }}</strong>
+              <!--<span class="item-note"><strong>{{ cart.formattedSubtotal }}</strong></span>-->
+				<span class="item-note" 	><strong>{{cart.price_with_vat === '0' ? cart.formattedSubtotalExclTax : cart.formattedSubtotal}}</strong></span>
+            </div>
+            <!--div class="item item-custom confirmation-card-total-tax">
+                {{ "Tax" | translate }}
+                <span class="item-note">{{ cart.formattedDeductedTva }}</span>
+            </div-->
+            <div class="item item-custom confirmation-card-total-discount" ng-if="cart.discount_enabled && cart.discount_code != '' && cart.discount">
+              {{ "Discount" | translate }} ({{ cart.discount_message }})
+              <span class="item-note">- {{ cart.discount }}</span>
+            </div>
+
+            <div class="item item-custom confirmation-card-total-subtotalincldiscount">
+              <strong>{{ "Subtotal" | translate }} {{ "Incl." | translate | lowercase }} {{ "Discount" | translate | lowercase }}</strong>
+              <span class="item-note"><strong>{{ cart.formattedSubtotalWithDiscount }}</strong></span>
+            </div>
+            <!--div class="item item-custom confirmation-card-total-subtotalexcltax">
+                {{ "Subtotal Excl. Tax" | translate }}
+                <span class="item-note">{{ cart.formattedDeductedTotalHT }}</span>
+            </div-->
+
+            <div class="item item-custom confirmation-card-total-gratuity" ng-if="cart.add_tip">
+                {{ "Gratuity" | translate }}
+                <span class="item-note">{{ cart.formattedTip }}</span>
+            </div>
+            <div class="item item-custom confirmation-card-total-fulltotal">
+                <strong>{{ "Total" | translate }}</strong>
+                <span class="item-note"><strong>{{ cart.formattedTotal }}</strong></span>
+            </div>
+
+            <!--
+            <div class="item item-custom" ng-if="!cart.hide_paid_amount && cart.formatted_paid_amount && cart.formatted_delivery_amount_due">
+                <div class="col-75 text-right">{{ "I will pay" | translate }}</div>
+                <div class="col-25 text-right">{{ cart.formatted_paid_amount }}</div>
+            </div>
+            <div class="item item-custom" ng-if="!cart.hide_paid_amount && cart.formatted_paid_amount && cart.formatted_delivery_amount_due">
+                <div class="col-75 text-right">{{ "Remaining due" | translate }}</div>
+                <div class="col-25 text-right">{{ cart.formatted_delivery_amount_due }}</div>
+            </div>-->
+            <div class="item item-custom confirmation-card-total-iwillpay" ng-if="!cart.hide_paid_amount && cart.formatted_paid_amount && cart.formatted_delivery_amount_due">
+                {{ "I will pay" | translate }}
+                <span class="item-note">{{ cart.formatted_paid_amount }}</span>
+            </div>
+            <div class="item item-custom confirmation-card-total-remainingdue" ng-if="!cart.hide_paid_amount && cart.formatted_paid_amount && cart.formatted_delivery_amount_due">
+               {{ "Remaining due" | translate }}
+                <span class="item-note">{{ cart.formatted_delivery_amount_due }}</span>
+            </div>
+			<div class="item item-divider item-divider-custom" ng-if="!cart.hide_paid_amount && cart.formatted_paid_amount && cart.formatted_delivery_amount_due"></div>
+        </div>
+        <div class="card confirmation-card-confirmationmessage" ng-if="confirmation_message">
+            <div class="item item-custom">
+                {{ confirmation_message }}
+            </div>
+        </div>
+        <!--TG-459-->
+        <div class="card confirmation-card-notes">
+            <div class="item item-divider item-divider-custom">
+                <p><strong><i class="icon ion-clipboard"></i> {{ "Notes" | translate }} </strong></p>
+            </div>
+            <div class="item">
+                <p>
+                    <label class="item item-input">
+                        <textarea placeholder='{{ "Notes" | translate }}' ng-model="$parent.notes"></textarea>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <style type="text/css">
+		 p.p-left-pad {padding-left:10px;}
+        </style>
+    </ion-content>
+<mmobilcart-footer></mmobilcart-footer>
+</ion-view>
+
+
+

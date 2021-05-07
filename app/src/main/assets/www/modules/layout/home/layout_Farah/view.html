@@ -1,0 +1,28 @@
+<ion-content overflow-scroll="true">
+<div class="layout layout_farah">
+
+        <div class="farah_container">
+            <div class="farah_list_items">
+                <div class="farah_item animated {{ features.layoutOptions.FarahtextAnimation }}" style="background-image: url({{ feature.icon_url }})" tabbar-items ng-repeat="feature in features.overview.options" option="feature" go-to-url="goTo(feature);">
+                    <div class="farah_content">
+                        <h1 class="farah_title">{{ feature.name }}</h1>
+                        <p class="farah_subtitle" ng-if="feature.subtitle">{{ feature.subtitle }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <style type="text/css">
+        .layout.layout_farah .farah_item .farah_title{
+          text-transform: {{ features.layoutOptions.FarahtextTransform }} !important;
+        }
+
+        .layout.layout_farah .farah_item .farah_subtitle{
+          text-align: {{ features.layoutOptions.FarahtextAlign }} !important;
+        }
+        </style>
+
+</div>
+</ion-content>

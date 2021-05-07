@@ -1,0 +1,27 @@
+	<style>
+		.tab-item {opacity:1 !important;}
+		.tabs {bottom: 0 !important;top: auto !important;}	
+		 .tab-special-01 {display:none !important;}
+		 .tab-exit-0 {display:none !important;}	
+		 .tab-usespecial-0 {display:none !important;}	
+		 .tab-disable-specials-1 {display:none !important;}	
+	</style>
+	<ion-tabs class="tabs" ng-class="{'tabs-icon-top':bottom_titles==1 , 'tabs-icon-only':bottom_titles!=1 }">
+		  <ion-tab title='{{tab_exit_name}}' icon="{{tab_exit_icon}}" ng-click="closeMobilcart()" class='tab-exit tab-exit-{{use_exit}}'>
+			<!-- Tab Zero content -->
+		  </ion-tab>
+		  <ion-tab title='{{tab_order_history_name}}' icon="{{tab_order_history_icon}}" ng-click="openHistory()" class='tab-history'>
+			<!-- Tab 1 content -->
+		  </ion-tab>
+		  <ion-tab title='{{tab_specials_name}}' id="{{tab_specials_icon}}" icon="{{tab_specials_icon}}" badge="footer_special_total_count" badge-style="badge-assertive" ng-click="openSpecials()" class="tab-special-{{special_total_count}}  tab-disable-specials-{{disable_special}}">
+			<!-- Tab 1 content -->
+		  </ion-tab>
+		  <ion-tab title='{{tab_home_name}}' icon="{{tab_home_icon}}" ng-click="goHome()" class='tab-home'>
+			<!-- Tab 2 content -->
+		  </ion-tab>
+
+		  <ion-tab title='{{tab_cart_name}}' icon="{{tab_cart_icon}}" badge="cart_total_badge" badge-style="badge-assertive" ng-click="openCart()" class='tab-cart'>
+			<!-- Tab 3 content -->
+		  </ion-tab>
+
+	</ion-tabs>

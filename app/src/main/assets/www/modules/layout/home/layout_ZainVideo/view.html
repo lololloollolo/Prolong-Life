@@ -1,0 +1,59 @@
+<div class="layout layout_zain">
+
+  <!-- video background -->
+  <video autoplay loop plays-inline id="zain-video-background" >
+    <source src="{{ features.layoutOptions.zainvideourl.replace('http', 'https') | trustUrl }}" type="video/mp4">
+  </video>
+
+  <!-- Menu button -->
+  <input id="zainvideo-trigger" type="checkbox" class="zainvideo-trigger">
+  <label for="zainvideo-trigger">
+  <span class="zainvideo-menu-icon {{ features.layoutOptions.iconShape }} {{ features.layoutOptions.menuPosition }} {{ features.layoutOptions.menuDirection }}">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+  </label>
+
+  <!-- List pages -->
+  <header class="zainvideo-menu">
+  <nav>
+    <ul>
+      <li tabbar-items ng-repeat="feature in features.overview.options" option="feature" go-to-url="goTo(feature);">
+        <a class="{{ features.layoutOptions.textTransform }}">{{ feature.name }}</a>
+      </li>
+    </ul>
+  </nav>
+  </header>
+
+</div>
+
+<!-- Custom css code used for option -->
+<style type="text/css">
+.layout.layout_zain .zainvideo-menu a {
+  color: {{ features.layoutOptions.titleTextColor }} !important;
+}
+.layout.layout_zain .zainvideo-menu {
+  background: {{ features.layoutOptions.backgroundColor }} !important;
+}
+.layout.layout_zain .zainvideo-menu nav ul li a:hover {
+  color: {{ features.layoutOptions.hoverColor }} !important;
+}
+.layout.layout_zain .zainvideo-trigger:checked ~ label .zainvideo-menu-icon:hover {
+  border-color: {{ features.layoutOptions.hoverColor }} !important;
+}
+.layout.layout_zain .zainvideo-trigger:checked ~ label .zainvideo-menu-icon:hover span {
+  background: {{ features.layoutOptions.hoverColor }} !important;
+}
+.layout.layout_zain .zainvideo-trigger:checked ~ label .zainvideo-menu-icon:hover span.label {
+  background: none;
+  color: {{ features.layoutOptions.hoverColor }} !important;
+}
+.layout.layout_zain .zainvideo-menu-icon span {
+  background: {{ features.layoutOptions.burgerColor }} !important;
+}
+.layout.layout_zain .zainvideo-menu-icon {
+  border-color: {{ features.layoutOptions.burgerColor }} !important;
+}
+</style>
